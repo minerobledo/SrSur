@@ -21,7 +21,7 @@ public partial class Post
 
     public DateTime? LastEditDate { get; set; }
 
-    public string PostStatus { get; set; } = null!;
+    public string PostStatus { get; set; } = null!; // Pending , Publish
 
     public string? Excerpt { get; set; }
 
