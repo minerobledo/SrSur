@@ -13,8 +13,8 @@ namespace SrSur.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpPost("CreateTag")]
-        public async Task<ActionResult> CreateTag([FromBody] CategoryDto d)
+        [HttpPost("CreateCategory")]
+        public async Task<ActionResult> CreateCategory([FromBody] CategoryDto d)
         {
             if (d.IsComplete() == false) return BadRequest("Faltan Datos");
             try
@@ -27,8 +27,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("EditTag")]
-        public async Task<ActionResult> EditTag([FromBody] EditTagDto d)
+        [HttpPost("EditCategory")]
+        public async Task<ActionResult> EditCategory([FromBody] EditTagDto d)
         {
             try
             {
@@ -40,8 +40,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("DeleteTag")]
-        public async Task<ActionResult> DeleteTag([FromBody] long id)
+        [HttpPost("DeleteCategory")]
+        public async Task<ActionResult> DeleteCategory([FromBody] long id)
         {
             try
             {
@@ -53,8 +53,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("GetTag")]
-        public async Task<ActionResult> GetTag([FromBody] int page)
+        [HttpPost("GetCategory")]
+        public async Task<ActionResult> GetCategory([FromBody] int page)
         {
             try
             {
@@ -66,8 +66,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("SerchTag")]
-        public async Task<ActionResult> SerchTag([FromBody] SerchTagDto dto)
+        [HttpPost("SerchCategory")]
+        public async Task<ActionResult> SerchCategory([FromBody] SerchTagDto dto)
         {
             try
             {

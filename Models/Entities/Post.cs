@@ -21,13 +21,15 @@ public partial class Post
 
     public DateTime? LastEditDate { get; set; }
 
-    public string PostStatus { get; set; } = null!; // Pending , Publish
+    public string PostStatus { get; set; } = null!;
 
     public string? Excerpt { get; set; }
 
     public virtual User Author { get; set; } = null!;
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    public virtual ICollection<PostsVisitedByGuest> PostsVisitedByGuests { get; set; } = new List<PostsVisitedByGuest>();
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 

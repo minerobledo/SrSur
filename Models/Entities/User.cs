@@ -11,7 +11,7 @@ public partial class User
 
     public string Nickname { get; set; } = null!;
 
-    public DateTime DateRegister { get; set; } = DateTime.Now;
+    public DateTime DateRegister { get; set; }
 
     public string Email { get; set; } = null!;
 

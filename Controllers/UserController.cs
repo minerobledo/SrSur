@@ -13,7 +13,7 @@ namespace SrSur.Controllers
         {
             _userService = userService;
         }
-        [Authorize]
+        
         [HttpPost("Register")]
         public async Task<ActionResult> Register([FromBody]RegistrarDto dto )
         {

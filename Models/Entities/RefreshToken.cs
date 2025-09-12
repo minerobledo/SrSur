@@ -13,7 +13,7 @@ public partial class RefreshToken
 
     public DateTime ExpiryDate { get; set; }
 
-    public DateTime CreatedDate { get; set; } 
+    public DateTime CreatedDate { get; set; }
 
     public bool Revoked { get; set; }
 

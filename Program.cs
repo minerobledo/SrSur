@@ -11,15 +11,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // Configurar Kestrel
-builder.WebHost.ConfigureKestrel(options =>
-{
-    // Si querés forzar HTTP y HTTPS
-    options.ListenAnyIP(5000); // HTTP
-    options.ListenAnyIP(5001, listenOptions =>
-    {
-        listenOptions.UseHttps(); // HTTPS con certificado de dev
-    });
-});
+builder.WebHost.UseKestrel()
+       .ConfigureKestrel((context, options) =>
+       {
+           options.ListenAnyIP(5000);  // HTTP
+           options.ListenAnyIP(5001, listenOptions =>
+           {
+               listenOptions.UseHttps(); // usa el certificado dev recién creado
+           });
+
+       });
 
 builder.Services.AddInfrastructure(builder.Configuration);
 Console.WriteLine("Servicios de infraestructura agregados.");
