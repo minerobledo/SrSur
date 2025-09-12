@@ -22,6 +22,6 @@ COPY --from=build /out .
 EXPOSE 8080
 
 # Arrancamos la app
-ENTRYPOINT ["dotnet", "Api.dll"]
+ENTRYPOINT ["dotnet", "SrSur.dll"]
 
 
