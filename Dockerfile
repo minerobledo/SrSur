@@ -9,7 +9,7 @@ COPY . .
 RUN dotnet restore
 
 # Publicamos específicamente el proyecto Api
-RUN dotnet publish "Api/Api.csproj" -c Release -o /out
+RUN dotnet publish "SrSur.csproj" -c Release -o /out
 
 # Etapa 2: Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
