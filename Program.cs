@@ -3,48 +3,42 @@ using Microsoft.IdentityModel.Tokens;
 using SrSur;
 using System.Text;
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Add services to the container.
-
-// Configurar Kestrel
+// --- Configurar Kestrel solo en HTTP interno ---
 builder.WebHost.UseKestrel()
        .ConfigureKestrel((context, options) =>
        {
-           options.ListenAnyIP(5000);  // HTTP
-           options.ListenAnyIP(5001, listenOptions =>
-           {
-               listenOptions.UseHttps(); // usa el certificado dev recién creado
-           });
-
+           // Railway hará proxy a HTTPS externo, no necesitamos cert local
+           options.ListenAnyIP(5000);  // HTTP interno
        });
 
+// --- Servicios ---
 builder.Services.AddInfrastructure(builder.Configuration);
 Console.WriteLine("Servicios de infraestructura agregados.");
 
-
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// Swagger (solo en Development)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// --- Middleware ---
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// No necesitamos redirección HTTPS
+// app.UseHttpsRedirection();  <-- lo comentamos o eliminamos
 
 app.UseAuthorization();
 
+// Mapear controladores
 app.MapControllers();
 
+// --- Ejecutar la app ---
 app.Run();
