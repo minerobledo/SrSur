@@ -29,16 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-try
-{
-    var addresses = Dns.GetHostAddresses("humble-inspiration");
-    foreach (var ip in addresses)
-        Console.WriteLine($"IP del host db: {ip}");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"No se pudo resolver host db: {ex.Message}");
-}
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
