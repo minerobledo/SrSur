@@ -16,7 +16,7 @@ namespace SrSur
         {
 
             services.AddDbContext<SrsurDbContext>(options =>
-               options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+               options.UseNpgsql(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")));
 
             // Configurar JWT
             var jwt = configuration.GetSection("Jwt");
