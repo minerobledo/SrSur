@@ -28,6 +28,7 @@ var app = builder.Build();
 // --- Middleware ---
 if (app.Environment.IsDevelopment())
 {
+    Console.WriteLine("sawger agregado");
     app.UseSwagger();
     app.UseSwaggerUI();
 }
