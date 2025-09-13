@@ -39,7 +39,7 @@ namespace SrSur.Repositories
         public async Task<List<Tag>> GetPaginatedAsync(int pageNumber, int pageSize)
         {
             return await _dbset
-                .OrderBy(t => t.TagName)
+                .OrderBy(t => t.Tagname)
                 .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                 .Take(pageSize)                    // trae solo los que corresponden
                 .ToListAsync();
@@ -52,16 +52,16 @@ namespace SrSur.Repositories
         public async Task<List<Tag>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize)
         {
             return await _context.Tags
-                .Where(t => t.TagName.StartsWith(prefix))   // empieza con "prefix"
+                .Where(t => t.Tagname.StartsWith(prefix))   // empieza con "prefix"
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .OrderBy(t => t.TagName)                    // ordenados por nombre
+                .OrderBy(t => t.Tagname)                    // ordenados por nombre
                 .ToListAsync();
         }
         public async Task<Tag?> GetByNameAsync(string name)
         {
             return await _context.Tags
-               .FirstOrDefaultAsync(t => t.TagName == name);
+               .FirstOrDefaultAsync(t => t.Tagname == name);
         }
 
         public async Task UpdateAsync(Tag tag)

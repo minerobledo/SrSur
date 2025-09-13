@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace SrSur.Models.Entities;
 
-public partial class PostsVisitedByGuest
+public partial class Postsvisitedbyguest
 {
-    public long PostId { get; set; }
+    public long Postid { get; set; }
 
-    public long GuestId { get; set; }
+    public long Guestid { get; set; }
 
-    public int VisiteTime { get; set; }
+    public int Visitetime { get; set; }
 
-    public DateTime DateVisited { get; set; }
+    public DateTime Datevisited { get; set; }
 
     public virtual Guest Guest { get; set; } = null!;
 

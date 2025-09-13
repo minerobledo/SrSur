@@ -19,7 +19,7 @@ namespace SrSur.Services
 
             if (_tagRepository.GetByNameAsync(TagName) == null)
             {
-                var newTag = new Tag() { TagName = TagName, Slug = slug, TagDescription = descrption };
+                var newTag = new Tag() { Tagname = TagName, Slug = slug, Tagdescription = descrption };
                 await _tagRepository.AddAsync(newTag);
                 return new Responce<bool>() { data = true, succeeded = true };
             }
@@ -34,9 +34,9 @@ namespace SrSur.Services
             var tag = await _tagRepository.GetByIdAsync(id);
             if (tag != null)
             {
-                tag!.TagName = (tag!.TagName != tagName!) ? tagName! : tag!.TagName;
+                tag!.Tagname = (tag!.Tagname != tagName!) ? tagName! : tag!.Tagname;
                 tag!.Slug = (tag!.Slug != slug!) ? slug! : tag!.Slug;
-                tag!.TagDescription = (tag!.TagDescription != descrption!) ? descrption! : tag!.TagDescription;
+                tag!.Tagdescription = (tag!.Tagdescription != descrption!) ? descrption! : tag!.Tagdescription;
                 await _tagRepository.UpdateAsync(tag);
 
                 return new Responce<bool>() { data = true, succeeded = true };

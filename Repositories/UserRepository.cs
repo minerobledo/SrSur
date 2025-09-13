@@ -17,14 +17,14 @@ namespace SrSur.Repositories
         public async Task<User?> GetByIdAsync(long id)
         {
             return await _context.Users
-                .Include(u => u.RefreshTokens) // Traemos los refresh tokens relacionados
+                .Include(u => u.Refreshtokens) // Traemos los refresh tokens relacionados
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User?> GetByEmailAsync(string email)
         {
             return await _context.Users
-                .Include(u => u.RefreshTokens)
+                .Include(u => u.Refreshtokens)
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 

@@ -7,17 +7,17 @@ public partial class Category
 {
     public long Id { get; set; }
 
-    public long? ParentId { get; set; }
+    public long? Parentid { get; set; }
 
-    public string CategoryName { get; set; } = null!;
+    public string Categoryname { get; set; } = null!;
 
     public string? Slug { get; set; }
 
-    public string? CategoryDescription { get; set; }
+    public string? Categorydescription { get; set; }
 
-    public DateTime CreateDate { get; set; }
+    public DateTime Createdate { get; set; }
 
-    public DateTime? LastEditDate { get; set; }
+    public DateTime? Lasteditdate { get; set; }
 
     public virtual ICollection<Category> InverseParent { get; set; } = new List<Category>();
 

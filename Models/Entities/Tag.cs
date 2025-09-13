@@ -7,15 +7,15 @@ public partial class Tag
 {
     public long Id { get; set; }
 
-    public string TagName { get; set; } = null!;
+    public string Tagname { get; set; } = null!;
 
     public string? Slug { get; set; }
 
-    public string? TagDescription { get; set; }
+    public string? Tagdescription { get; set; }
 
-    public DateTime CreateDate { get; set; }
+    public DateTime Createdate { get; set; }
 
-    public DateTime? LastEditDate { get; set; }
+    public DateTime? Lasteditdate { get; set; }
 
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 }

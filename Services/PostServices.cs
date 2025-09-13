@@ -1,4 +1,4 @@
-﻿using Azure.Core;
+﻿
 using SrSur.Interface;
 using SrSur.Models.DTOs;
 using SrSur.Models.Entities;
@@ -20,11 +20,11 @@ namespace SrSur.Services
 
             var comment = new Post()
             {
-               AuthorId = authorId,
+               Authorid = authorId,
                Title = titel,
                Body = body,
-               CommentStatus = comentStatus,
-               PostStatus = "Pending",
+               Commentstatus = comentStatus,
+               Poststatus = "Pending",
                Excerpt = exert
 
             };
@@ -43,7 +43,7 @@ namespace SrSur.Services
             {
                 post!.Title = (post!.Title != titel!) ? titel! : post!.Title;
                 post!.Body = (post!.Body != body!) ? body! : post!.Body;
-                post!.CommentStatus = (post.CommentStatus != comentStatus!) ? comentStatus! : post.CommentStatus;
+                post!.Commentstatus = (post.Commentstatus != comentStatus!) ? comentStatus! : post.Commentstatus;
                 post!.Excerpt = (post.Excerpt != exert)? exert! :post.Excerpt;
 
                 await _postRepository.UpdateAsync(post);

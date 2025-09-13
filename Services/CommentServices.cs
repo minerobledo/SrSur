@@ -19,15 +19,15 @@ namespace SrSur.Services
 
             var comment = new Comment() {
                 
-                UserId = userId,
-                ParentId = parentId,
+                Userid = userId,
+                Parentid = parentId,
                 Author = author,
-                EmailAuthor = email,
+                Emailauthor = email,
                 Content = content,
                 Device = device,
                 Country = country,
                 Region = region,
-                AuthorUrl = authorUrl 
+                Authorurl = authorUrl 
             };
         
             

@@ -11,7 +11,7 @@ public partial class User
 
     public string Nickname { get; set; } = null!;
 
-    public DateTime DateRegister { get; set; }
+    public DateTime Dateregister { get; set; }
 
     public string Email { get; set; } = null!;
 
@@ -19,5 +19,5 @@ public partial class User
 
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
 
-    public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public virtual ICollection<Refreshtoken> Refreshtokens { get; set; } = new List<Refreshtoken>();
 }

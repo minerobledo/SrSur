@@ -18,8 +18,8 @@ namespace SrSur.Services
 
             if (_categoryRepository.GetByNameAsync(name) == null)
             {
-                var category = new Category() { CategoryName = name, Slug = slug, CategoryDescription = descrption };
-                category.ParentId = (parent != null)? parent.Value : null;
+                var category = new Category() { Categoryname = name, Slug = slug, Categorydescription = descrption };
+                category.Parentid = (parent != null)? parent.Value : null;
                 await _categoryRepository.AddAsync(category);
                 return new Responce<bool>() { data = true, succeeded = true };
             }
@@ -34,9 +34,9 @@ namespace SrSur.Services
             var tag = await _categoryRepository.GetByIdAsync(id);
             if (tag != null)
             {
-                tag!.CategoryName = (tag!.CategoryName != name!) ? name! : tag!.CategoryName;
+                tag!.Categoryname = (tag!.Categoryname != name!) ? name! : tag!.Categoryname;
                 tag!.Slug = (tag!.Slug != slug!) ? slug! : tag!.Slug;
-                tag!.CategoryDescription = (tag!.CategoryDescription != descrption!) ? descrption! : tag!.CategoryDescription;
+                tag!.Categorydescription = (tag!.Categorydescription != descrption!) ? descrption! : tag!.Categorydescription;
                 await _categoryRepository.UpdateAsync(tag);
 
                 return new Responce<bool>() { data = true, succeeded = true };

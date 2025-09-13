@@ -7,21 +7,21 @@ public partial class Post
 {
     public long Id { get; set; }
 
-    public long AuthorId { get; set; }
+    public long Authorid { get; set; }
 
     public string? Title { get; set; }
 
     public string? Body { get; set; }
 
-    public string CommentStatus { get; set; } = null!;
+    public string Commentstatus { get; set; } = null!;
 
-    public DateTime CreateDate { get; set; }
+    public DateTime Createdate { get; set; }
 
-    public DateTime? PublishDate { get; set; }
+    public DateTime? Publishdate { get; set; }
 
-    public DateTime? LastEditDate { get; set; }
+    public DateTime? Lasteditdate { get; set; }
 
-    public string PostStatus { get; set; } = null!;
+    public string Poststatus { get; set; } = null!;
 
     public string? Excerpt { get; set; }
 
@@ -29,7 +29,7 @@ public partial class Post
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<PostsVisitedByGuest> PostsVisitedByGuests { get; set; } = new List<PostsVisitedByGuest>();
+    public virtual ICollection<Postsvisitedbyguest> Postsvisitedbyguests { get; set; } = new List<Postsvisitedbyguest>();
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 

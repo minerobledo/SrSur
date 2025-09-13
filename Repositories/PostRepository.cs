@@ -1,4 +1,4 @@
-﻿using Azure;
+﻿
 using Microsoft.EntityFrameworkCore;
 using SrSur.Data;
 using SrSur.Interface;
@@ -60,7 +60,7 @@ namespace SrSur.Repositories
                         query = query.Where(p => p.Body! .Contains(filtro.Value.ToString()!));
                         break;
                     case "Category":
-                        query = query.Where(p => p.Categories.Any(c => c.Id == (long)filtro.Value || c.ParentId == (long)filtro.Value));
+                        query = query.Where(p => p.Categories.Any(c => c.Id == (long)filtro.Value || c.Parentid == (long)filtro.Value));
                         break;
                     case "Tag":
                         query = query.Where(p => p.Tags.Any(t => t.Id == (long)filtro.Value));
@@ -72,7 +72,7 @@ namespace SrSur.Repositories
             }
 
             // Ordenar por CreateAt
-            query = query.OrderByDescending(r => r.CreateDate);
+            query = query.OrderByDescending(r => r.Createdate);
 
             // Paginación usando fecha
             query.Skip((pageNumber - 1) * pageSize);

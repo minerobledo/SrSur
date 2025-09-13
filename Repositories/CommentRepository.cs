@@ -49,10 +49,10 @@ namespace SrSur.Repositories
 
             if(idPost != null)
             {
-                query= query.Where(c => c.PostId == idPost);
-                query = query.Where(c => c.ParentId == null);
+                query= query.Where(c => c.Postid == idPost);
+                query = query.Where(c => c.Parentid == null);
             }
-            query = query.OrderBy(t => t.DateCreate)
+            query = query.OrderBy(t => t.Datecreate)
                 .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                 .Take(pageSize);                    // trae solo los que corresponden
 
@@ -61,8 +61,8 @@ namespace SrSur.Repositories
         public async Task<List<Comment>> GetPaginatedParentAsync(long parentID, int pageNumber, int pageSize)
         {
             return await _dbset
-               .Where(t => t.ParentId== parentID)
-               .OrderBy(t => t.DateCreate)
+               .Where(t => t.Parentid== parentID)
+               .OrderBy(t => t.Datecreate)
                .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                .Take(pageSize)                    // trae solo los que corresponden
                .ToListAsync();

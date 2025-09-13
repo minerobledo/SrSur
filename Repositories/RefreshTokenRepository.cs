@@ -48,8 +48,8 @@ namespace SrSur.Repositories
         public async Task<Tag?> GetByNameAsync(string name)
         {
             return await _context.Tags
-              .Include(u => u.TagName) // Traemos los refresh tokens relacionados
-              .FirstOrDefaultAsync(u => u.TagName == name);
+              .Include(u => u.Tagname) // Traemos los refresh tokens relacionados
+              .FirstOrDefaultAsync(u => u.Tagname == name);
         }
 
         public async Task UpdateAsync(Tag tag)

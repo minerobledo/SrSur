@@ -17,8 +17,8 @@ namespace SrSur.Services
         {
             var guest = new Guest()
             {
-                UserAgent = userAgent,
-                IpAddress = ipAdres,
+                Useragent = userAgent,
+                Ipaddress = ipAdres,
                 Referrer = referer,
                 Device = device,
                 Country = country,

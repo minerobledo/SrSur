@@ -82,13 +82,13 @@ namespace SrSur.Services
             return jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value!;
         }
 
-        public RefreshToken GenerateRefeshToken()
+        public Refreshtoken GenerateRefeshToken()
         {
-            var token = new RefreshToken
+            var token = new Refreshtoken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)), // string seguro
-                ExpiryDate = DateTime.UtcNow.AddDays(30),
-                CreatedDate = DateTime.UtcNow
+                Expirydate = DateTime.UtcNow.AddDays(30),
+                Createddate = DateTime.UtcNow
             };
             return token;
         }

@@ -45,7 +45,7 @@ namespace SrSur.Services
             var jwt = _jwtService.GenerateToken(email);
             var refreshToken = _jwtService.GenerateRefeshToken();
 
-            usuario.RefreshTokens.Add(refreshToken);
+            usuario.Refreshtokens.Add(refreshToken);
             await _userRepository.UpdateAsync(usuario);
 
             return new LoginResponceDTO { JWT = jwt, RefreshToken = refreshToken.Token, UserId =usuario.Id};

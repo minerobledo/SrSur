@@ -46,7 +46,7 @@ namespace SrSur.Repositories
         public async Task<Category?> GetByNameAsync(string name)
         {
             return await _context.Categories
-               .FirstOrDefaultAsync(c => c.CategoryName == name);
+               .FirstOrDefaultAsync(c => c.Categoryname == name);
             
         }
 
@@ -59,17 +59,17 @@ namespace SrSur.Repositories
         public async Task<List<Category>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize)
         {
             return await _context.Categories
-                .Where(t => t.CategoryName.StartsWith(prefix))   // empieza con "prefix"
+                .Where(t => t.Categoryname.StartsWith(prefix))   // empieza con "prefix"
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .OrderBy(t => t.CategoryName)                    // ordenados por nombre
+                .OrderBy(t => t.Categoryname)                    // ordenados por nombre
                 .ToListAsync();
         }
 
         public async Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize)
         {
             return await _dbset
-                .OrderBy(t => t.CategoryName)
+                .OrderBy(t => t.Categoryname)
                 .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                 .Take(pageSize)                    // trae solo los que corresponden
                 .ToListAsync();
