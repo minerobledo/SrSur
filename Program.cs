@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.IdentityModel.Tokens;
 using SrSur;
 using SrSur.Data;
 using System;
@@ -28,7 +28,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+try
+{
+    using var conn = new SqlConnection("Server=db,1433;Database=MiAppDB;User Id=sa;Password=ARGDETECEsLaMejorEmprezaDELMunDoMundial123!;TrustServerCertificate=True;");
+    conn.Open();
+    Console.WriteLine("¡Conexión exitosa!");
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.Message);
+}
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
