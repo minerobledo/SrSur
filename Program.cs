@@ -31,7 +31,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 try
 {
-    var addresses = Dns.GetHostAddresses("db");
+    var addresses = Dns.GetHostAddresses("humble-inspiration");
     foreach (var ip in addresses)
         Console.WriteLine($"IP del host db: {ip}");
 }
