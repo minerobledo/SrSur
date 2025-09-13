@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
+
 using SrSur;
+using SrSur.Data;
+using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +28,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
+    db.Database.Migrate();
+}
 
 // --- Middleware ---
 if (app.Environment.IsDevelopment())
