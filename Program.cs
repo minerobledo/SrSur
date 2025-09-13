@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using SrSur;
 using SrSur.Data;
 using System;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,13 +31,13 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 try
 {
-    using var conn = new SqlConnection("Server=db,1433;Database=MiAppDB;User Id=sa;Password=ARGDETECEsLaMejorEmprezaDELMunDoMundial123!;TrustServerCertificate=True;");
-    conn.Open();
-    Console.WriteLine("¡Conexión exitosa!");
+    var addresses = Dns.GetHostAddresses("db");
+    foreach (var ip in addresses)
+        Console.WriteLine($"IP del host db: {ip}");
 }
 catch (Exception ex)
 {
-    Console.WriteLine(ex.Message);
+    Console.WriteLine($"No se pudo resolver host db: {ex.Message}");
 }
 using (var scope = app.Services.CreateScope())
 {
