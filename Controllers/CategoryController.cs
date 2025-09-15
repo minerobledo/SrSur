@@ -53,8 +53,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("GetCategory")]
-        public async Task<ActionResult> GetCategory([FromBody] int page)
+        [HttpGet("GetCategory")]
+        public async Task<ActionResult> GetCategory([FromRoute] int page)
         {
             try
             {

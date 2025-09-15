@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SrSur.Models.DTOs.Imput.Coment;
 using SrSur.Models.DTOs.Imput.Post;
 using SrSur.Services;
@@ -13,6 +14,12 @@ namespace SrSur.Controllers
         {
             _commentServices = commentServices;
         }
+        /// <summary>
+        /// endpoint para crear un comentario y sub comentarios ligados a un post
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
+        [Authorize]
         [HttpPost("CreateComment")]
         public async Task<ActionResult> CreateComment([FromBody] CreateComentDto d)
         {
@@ -26,6 +33,11 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        /// <summary>
+        /// Endpoint para que el admin edite algun cometario
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         [HttpPost("EditComment")]
         public async Task<ActionResult> EditComment([FromBody] EditComentDto d)
         {
@@ -40,8 +52,13 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("DeleteComment")]
-        public async Task<ActionResult> DeleteComment([FromBody] long id)
+        /// <summary>
+        /// endpoin para que el admin elimine un comentario
+        /// </summary>
+        /// <param name="id">Id del comenttario a eliminar</param>
+        /// <returns></returns>
+        [HttpDelete("DeleteComment/{id}")]
+        public async Task<ActionResult> DeleteComment([FromRoute] long id)
         {
             try
             {
@@ -53,8 +70,13 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("GetAllComments")]
-        public async Task<ActionResult> GetAllComments([FromBody] int page)
+        /// <summary>
+        /// endpoint para que el admin obtenga odos los comentarios en existencia
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        [HttpPost("GetAllComments/{page}")]
+        public async Task<ActionResult> GetAllComments([FromRoute] int page)
         {
             try
             {
@@ -66,6 +88,12 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        /// <summary>
+        /// edpoint para obtener todos los comentarios de un post
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         [HttpPost("GetCommentsByPost")]
         public async Task<ActionResult> GetCommentsByPost([FromBody] GetComentByPostDto d)
         {
@@ -80,6 +108,12 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        /// <summary>
+        /// endpoin para obtener todos los comentarios hijos de otro comentario
+        /// </summary>
+        /// <param name="d"></param>
+        /// <returns></returns>
         [HttpPost("GetCommentsChild")]
         public async Task<ActionResult> GetCommentsChild([FromBody] GetComentParentsByPostDto d)
         {
