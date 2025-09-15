@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SrSur.Models.Entities;
 
@@ -20,7 +21,7 @@ public partial class Comment
     public string Content { get; set; } = null!;
 
     public string Device { get; set; } = null!;
-
+    [Column(TypeName = "timestamp with time zone")]
     public DateTime Datecreate { get; set; }
 
     public string? Country { get; set; }

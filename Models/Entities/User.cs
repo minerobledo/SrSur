@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SrSur.Models.Entities;
 
@@ -11,6 +12,7 @@ public partial class User
 
     public string Nickname { get; set; } = null!;
 
+    [Column(TypeName = "timestamp with time zone")]
     public DateTime Dateregister { get; set; }
 
     public string Email { get; set; } = null!;
