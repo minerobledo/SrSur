@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Post;
 using SrSur.Services;
@@ -14,6 +15,7 @@ namespace SrSur.Controllers
             _postServices = postServices;
         }
         [HttpPost("CreatePost")]
+        [Authorize]
         public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
         {
             if (d.IsComplete() == false) return BadRequest("Faltan Datos");
@@ -27,7 +29,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("EditPost")]
+        [HttpPatch("AdminEditPost")]
+        [Authorize]
         public async Task<ActionResult> EditPost([FromBody] EditPostDto d)
         {
             try
@@ -40,12 +43,27 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("DeletePost")]
-        public async Task<ActionResult> DeletePost([FromBody] long id)
+        [HttpDelete("AdminDeletePost{id}")]
+        [Authorize]
+        public async Task<ActionResult> DeletePost([FromRoute] long id)
         {
             try
             {
                 var responce = await _postServices.DeletePost(id);
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpPost("AdminSerchPost")]
+        [Authorize]
+        public async Task<ActionResult> AdminSerchPost([FromBody] SerchPostDto dto)
+        {
+            try
+            {
+                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page,true);
                 return Ok(responce);
             }
             catch (Exception ex)
@@ -58,7 +76,7 @@ namespace SrSur.Controllers
         {
             try
             {
-                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page);
+                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page,false);
                 return Ok(responce);
             }
             catch (Exception ex)

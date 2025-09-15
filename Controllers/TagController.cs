@@ -13,7 +13,7 @@ namespace SrSur.Controllers
         {
             _tagSeService = tagSeService;
         }
-        [HttpPost("CreateTag")]
+        [HttpPost("AdminCreateTag")]
         public async Task<ActionResult> CreateTag([FromBody] TagDto d)
         {
             if (d.IsComplete() == false) return BadRequest("Faltan Datos");
@@ -27,7 +27,7 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("EditTag")]
+        [HttpPatch("AdminEditTag")]
         public async Task<ActionResult> EditTag([FromBody] EditTagDto d)
         {
             try
@@ -40,8 +40,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("DeleteTag")]
-        public async Task<ActionResult> DeleteTag([FromBody] long id)
+        [HttpDelete("DeleteTag/{id}")]
+        public async Task<ActionResult> DeleteTag([FromQuery] long id)
         {
             try
             {

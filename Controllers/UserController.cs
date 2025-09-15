@@ -29,7 +29,7 @@ namespace SrSur.Controllers
         }
 
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<ActionResult> Login([FromBody]LoginDto dto)
         {
             if (dto.IsComplete()== false) return BadRequest("Faltan Datos");

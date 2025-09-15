@@ -52,6 +52,7 @@ namespace SrSur.Repositories
             {
                 switch (filtro.Key)
                 {
+                    
                     case "Titel":
                         query = query.Where(r => r.Title!.StartsWith(filtro.Value.ToString()!));
                         break;
@@ -59,7 +60,10 @@ namespace SrSur.Repositories
                     case "ContainsBody":
                         query = query.Where(p => p.Body! .Contains(filtro.Value.ToString()!));
                         break;
-                    case "Category":
+                    case "Status":
+                        query = query.Where(p=> p.Poststatus == filtro.Value.ToString());
+                        break;
+                    case "CategoryId":
                         query = query.Where(p => p.Categories.Any(c => c.Id == (long)filtro.Value || c.Parentid == (long)filtro.Value));
                         break;
                     case "Tag":

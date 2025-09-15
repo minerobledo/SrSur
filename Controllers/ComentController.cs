@@ -20,7 +20,7 @@ namespace SrSur.Controllers
         /// <param name="d"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpPost("CreateComment")]
+        [HttpPost("AdminCreateComment")]
         public async Task<ActionResult> CreateComment([FromBody] CreateComentDto d)
         {
             try
@@ -38,7 +38,8 @@ namespace SrSur.Controllers
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        [HttpPost("EditComment")]
+        [Authorize]
+        [HttpPatch("AdminEditComment")]
         public async Task<ActionResult> EditComment([FromBody] EditComentDto d)
         {
             if (d.IsComplete() == false) return BadRequest("Faltan Datos");
@@ -57,7 +58,8 @@ namespace SrSur.Controllers
         /// </summary>
         /// <param name="id">Id del comenttario a eliminar</param>
         /// <returns></returns>
-        [HttpDelete("DeleteComment/{id}")]
+        [HttpDelete("AdminDeleteComment/{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteComment([FromRoute] long id)
         {
             try
@@ -75,7 +77,8 @@ namespace SrSur.Controllers
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        [HttpPost("GetAllComments/{page}")]
+        [HttpGet("AdminGetAllComments/{page}")]
+        [Authorize]
         public async Task<ActionResult> GetAllComments([FromRoute] int page)
         {
             try

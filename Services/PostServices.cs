@@ -71,7 +71,7 @@ namespace SrSur.Services
             }
         }
 
-        public async Task<Responce<List<Post>>> GetPostFiltered(Dictionary<string,object> filtros, int page)
+        public async Task<Responce<List<Post>>> GetPostFiltered(Dictionary<string,object> filtros, int page,bool admin)
         {
             var trueFiltros = new Dictionary<string, object>();
             foreach (var filter in filtros)
@@ -89,7 +89,7 @@ namespace SrSur.Services
                             if(filter.Value is string b) trueFiltros.Add(filter.Key, filter.Value);
                             break;
 
-                        case "Category":
+                        case "CategoryId":
                             if (long.TryParse(filter.Value.ToString(), out long c))trueFiltros.Add(filter.Key,c);
                             break;
                         case "Tag":
@@ -103,7 +103,10 @@ namespace SrSur.Services
                     }
                 }
             }
-
+            if (admin== false)
+            {
+                trueFiltros.Add("Status", "publis");
+            }
             var posts = await _postRepository.SerchByFilterAsync(trueFiltros, page, 50);
             return new Responce<List<Post>>() { data = posts, succeeded = true };
         }

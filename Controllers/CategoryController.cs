@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SrSur.Models.DTOs.Imput.Category;
 using SrSur.Models.DTOs.Imput.Tag;
 using SrSur.Services;
@@ -13,7 +14,8 @@ namespace SrSur.Controllers
         {
             _categoryService = categoryService;
         }
-        [HttpPost("CreateCategory")]
+        [HttpPost("AdminCreateCategory")]
+        [Authorize]
         public async Task<ActionResult> CreateCategory([FromBody] CategoryDto d)
         {
             if (d.IsComplete() == false) return BadRequest("Faltan Datos");
@@ -27,7 +29,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("EditCategory")]
+        [HttpPatch("AdminEditCategory")]
+        [Authorize]
         public async Task<ActionResult> EditCategory([FromBody] EditTagDto d)
         {
             try
@@ -40,8 +43,9 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("DeleteCategory")]
-        public async Task<ActionResult> DeleteCategory([FromBody] long id)
+        [HttpGet("DeleteCategory/{id}")]
+        [Authorize]
+        public async Task<ActionResult> DeleteCategory([FromRoute] long id)
         {
             try
             {
@@ -54,6 +58,7 @@ namespace SrSur.Controllers
             }
         }
         [HttpGet("GetCategory")]
+
         public async Task<ActionResult> GetCategory([FromRoute] int page)
         {
             try
@@ -67,6 +72,7 @@ namespace SrSur.Controllers
             }
         }
         [HttpPost("SerchCategory")]
+        
         public async Task<ActionResult> SerchCategory([FromBody] SerchTagDto dto)
         {
             try
