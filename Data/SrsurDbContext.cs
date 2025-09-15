@@ -52,10 +52,10 @@ public partial class SrsurDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("categoryname");
             entity.Property(e => e.Createdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("createdate");
             entity.Property(e => e.Lasteditdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("lasteditdate");
             entity.Property(e => e.Parentid).HasColumnName("parentid");
             entity.Property(e => e.Slug)
@@ -85,7 +85,7 @@ public partial class SrsurDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("country");
             entity.Property(e => e.Datecreate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("datecreate");
             entity.Property(e => e.Device)
                 .HasMaxLength(100)
@@ -125,7 +125,7 @@ public partial class SrsurDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("country");
             entity.Property(e => e.Datecreate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("datecreate");
             entity.Property(e => e.Device)
                 .HasMaxLength(100)
@@ -157,19 +157,19 @@ public partial class SrsurDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("commentstatus");
             entity.Property(e => e.Createdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("createdate");
             entity.Property(e => e.Excerpt)
                 .HasMaxLength(500)
                 .HasColumnName("excerpt");
             entity.Property(e => e.Lasteditdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("lasteditdate");
             entity.Property(e => e.Poststatus)
                 .HasMaxLength(50)
                 .HasColumnName("poststatus");
             entity.Property(e => e.Publishdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("publishdate");
             entity.Property(e => e.Title)
                 .HasMaxLength(255)
@@ -228,7 +228,7 @@ public partial class SrsurDbContext : DbContext
             entity.Property(e => e.Postid).HasColumnName("postid");
             entity.Property(e => e.Guestid).HasColumnName("guestid");
             entity.Property(e => e.Datevisited)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("datevisited");
             entity.Property(e => e.Visitetime).HasColumnName("visitetime");
 
@@ -251,10 +251,10 @@ public partial class SrsurDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Createddate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("createddate");
             entity.Property(e => e.Expirydate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("expirydate");
             entity.Property(e => e.Replacedbytoken)
                 .HasMaxLength(200)
@@ -281,10 +281,10 @@ public partial class SrsurDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Createdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("createdate");
             entity.Property(e => e.Lasteditdate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("lasteditdate");
             entity.Property(e => e.Slug)
                 .HasMaxLength(100)
@@ -307,7 +307,7 @@ public partial class SrsurDbContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Dateregister)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("dateregister");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
