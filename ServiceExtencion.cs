@@ -44,7 +44,7 @@ namespace SrSur
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwt["Issuer"],
-                    ValidAudience = jwt["Jwt:Audience"],
+                    ValidAudience = jwt["Audience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"]!))
                 };
             });
