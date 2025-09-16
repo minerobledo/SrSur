@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SrSur.Interface;
+using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 using System;
@@ -32,7 +33,7 @@ namespace SrSur.Services
         }
 
         // Login
-        public async Task<LoginResponceDTO?> Login(string email, string password)
+        public async Task<Responce<LoginResponceDTO?>> Login(string email, string password)
         {
             var usuario = await _userRepository.GetByEmailAsync(email);
 
@@ -48,7 +49,8 @@ namespace SrSur.Services
             usuario.Refreshtokens.Add(refreshToken);
             await _userRepository.UpdateAsync(usuario);
 
-            return new LoginResponceDTO { JWT = jwt, RefreshToken = refreshToken.Token, UserId =usuario.Id};
+            var data = new LoginResponceDTO { JWT = jwt, RefreshToken = refreshToken.Token, UserId = usuario.Id }
+            return new Responce<LoginResponceDTO?> {data= data, succeeded= true };
         }
 
     }
