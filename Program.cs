@@ -73,6 +73,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseCors("DefaultPolicy");
 //using (var scope = app.Services.CreateScope())
 //{
 //    var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
