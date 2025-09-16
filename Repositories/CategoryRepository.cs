@@ -58,12 +58,20 @@ namespace SrSur.Repositories
 
         public async Task<List<Category>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize)
         {
-            return await _context.Categories
+            if(pageNumber != 1) {
+                return await _context.Categories
                 .Where(t => t.Categoryname.StartsWith(prefix))   // empieza con "prefix"
                 .OrderBy(t => t.Categoryname)                    // ordenados por nombre
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
+            }
+            return await _context.Categories
+                .Where(t => t.Categoryname.StartsWith(prefix))   // empieza con "prefix"
+                .OrderBy(t => t.Categoryname)                    // ordenados por nombre
+                .Take(pageSize)
+                .ToListAsync();
+
         }
 
         public async Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize)

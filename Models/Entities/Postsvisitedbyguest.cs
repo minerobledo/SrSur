@@ -12,7 +12,7 @@ public partial class Postsvisitedbyguest
 
     public int Visitetime { get; set; }
     [Column(TypeName = "timestamp with time zone")]
-    public DateTime Datevisited { get; set; }
+    public DateTime Datevisited { get; set; } = DateTime.Now;
 
     public virtual Guest Guest { get; set; } = null!;
 
