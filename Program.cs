@@ -91,6 +91,7 @@ if (app.Environment.IsDevelopment())
 // No necesitamos redirección HTTPS
 // app.UseHttpsRedirection();  <-- lo comentamos o eliminamos
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 
