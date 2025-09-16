@@ -14,7 +14,7 @@ namespace SrSur.Repositories
         public GuestRepository(SrsurDbContext context)
         {
             _context = context;
-            _dbset = dbset;
+            _dbset = context.Set<Guest>();
         }
 
         public async Task AddAsync(Guest guest)
