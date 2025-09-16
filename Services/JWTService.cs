@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using SrSur.Models.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,10 +13,11 @@ namespace SrSur.Services
         private readonly string _secret;
         private readonly string _issuer;
         private readonly string _audience;
-
+        private readonly IConfigurationSection _jwt; 
 
         public JWTService(IConfiguration configuration)
         {
+            _jwt = configuration.GetSection("Jwt")!;
             _secret = configuration["JWT:Key"] ?? "deault";
             _issuer = configuration["JWT:Issuer"] ?? "deault";
             _audience = configuration["JWT:Audience"] ?? "deault";
@@ -52,7 +54,8 @@ namespace SrSur.Services
 
         public ClaimsPrincipal? ValidateToken(string token)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
+            
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt["Key"]!));
             var tokenHandler = new JwtSecurityTokenHandler();
 
             try
