@@ -48,9 +48,23 @@ namespace SrSur
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"]!))
                 };
             });
-            services.AddScoped <IUserRepository,UserRepository>();
-            services.AddScoped<UserService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IGuestRepository, GuestRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<IPostsVisitedByGuestRepository, PostVisitedByGusetRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IUserRepository,UserRepository>();
+
+            services.AddScoped<CategoryService>();
+            services.AddScoped<CommentServices>();
+            services.AddScoped<GuestServices>();
             services.AddScoped<JWTService>();
+            services.AddScoped<PostServices>();
+            services.AddScoped<PostsVisitedByGuestServise>();
+            services.AddScoped<TagSeervice>();
+            services.AddScoped<UserService>();
         }
     }
 }
