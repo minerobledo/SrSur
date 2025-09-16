@@ -1,5 +1,6 @@
 ﻿using SrSur.Interface;
 using SrSur.Models.DTOs;
+using SrSur.Models.DTOs.Imput.Category;
 using SrSur.Models.Entities;
 using SrSur.Repositories;
 
@@ -29,15 +30,15 @@ namespace SrSur.Services
             }
         }
 
-        public async Task<Responce<bool>> EditCategory(long id, string? name, string? slug, string? descrption)
+        public async Task<Responce<bool>> EditCategory(EditCategoryDto dto)
         {
-            var tag = await _categoryRepository.GetByIdAsync(id);
-            if (tag != null)
+            var category = await _categoryRepository.GetByIdAsync(dto.Id);
+            if (category != null)
             {
-                tag!.Categoryname = (tag!.Categoryname != name!) ? name! : tag!.Categoryname;
-                tag!.Slug = (tag!.Slug != slug!) ? slug! : tag!.Slug;
-                tag!.Categorydescription = (tag!.Categorydescription != descrption!) ? descrption! : tag!.Categorydescription;
-                await _categoryRepository.UpdateAsync(tag);
+                category!.Categoryname = (category!.Categoryname != dto.CategoryName!) ? dto.CategoryName! : category!.Categoryname;
+                category!.Slug = (category!.Slug != dto.Slug!) ? dto.Slug! : category!.Slug;
+                category!.Categorydescription = (category!.Categorydescription != dto.CategoryDescription!) ? dto.CategoryDescription! : category!.Categorydescription;
+                await _categoryRepository.UpdateAsync(category);
 
                 return new Responce<bool>() { data = true, succeeded = true };
             }

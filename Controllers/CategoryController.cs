@@ -31,11 +31,11 @@ namespace SrSur.Controllers
         }
         [HttpPatch("AdminEditCategory")]
         [Authorize]
-        public async Task<ActionResult> EditCategory([FromBody] EditTagDto d)
+        public async Task<ActionResult> EditCategory([FromBody] EditCategoryDto d)
         {
             try
             {
-                var responce = await _categoryService.EditCategory(d.TagId, d.TagName, d.Slug, d.TagDescription);
+                var responce = await _categoryService.EditCategory(d);
                 return Ok(responce);
             }
             catch (Exception ex)

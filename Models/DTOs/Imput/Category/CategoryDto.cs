@@ -12,6 +12,7 @@
     }
     public class EditCategoryDto : DTOGeneric
     {
+        public long Id { get; set; }
         public long? ParentId { get; set; }
 
         public string CategoryName { get; set; } = null!;
