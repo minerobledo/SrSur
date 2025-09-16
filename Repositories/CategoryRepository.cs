@@ -76,9 +76,16 @@ namespace SrSur.Repositories
 
         public async Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize)
         {
-            return await _dbset
+            if (pageNumber != 1)
+            {
+                return await _dbset
+               .OrderBy(t => t.Categoryname)
+               .Skip((pageNumber - 1) * pageSize) // salta los registros previos
+               .Take(pageSize)                    // trae solo los que corresponden
+               .ToListAsync();
+            }
+                return await _dbset
                 .OrderBy(t => t.Categoryname)
-                .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                 .Take(pageSize)                    // trae solo los que corresponden
                 .ToListAsync();
         }
