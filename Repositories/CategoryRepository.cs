@@ -76,7 +76,8 @@ namespace SrSur.Repositories
 
         public async Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize)
         {
-            Console.WriteLine(pageNumber);
+            pageNumber = Math.Max(pageNumber, 1);
+            pageSize = Math.Max(pageSize, 1);
             if (pageNumber != 1)
             {
                 return await _dbset
