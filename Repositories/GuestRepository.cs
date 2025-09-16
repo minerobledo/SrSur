@@ -37,6 +37,15 @@ namespace SrSur.Repositories
             _dbset.Update(guest);
             await _context.SaveChangesAsync();
         }
+        public async Task<List<Guest>?> GetAllAsync()
+        {
+            return await _dbset.ToListAsync();
+        }
+        public async Task<Guest?> GetByIdAsync(long id)
+        {
+            return await _context.Guests
+               .FirstOrDefaultAsync(t => t.Id == id);
+        }
     }
 
 }

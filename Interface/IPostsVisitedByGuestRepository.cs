@@ -4,8 +4,9 @@ namespace SrSur.Interface
 {
     public interface IPostsVisitedByGuestRepository
     {
-        Task AddAsync(Guest guest);
-        Task UpdateAsync(Guest guest);
+        Task AddAsync(Postsvisitedbyguest guest);
+        Task UpdateAsync(Postsvisitedbyguest guest);
         Task DeleteAsync(long id);
+        Task<List<Post>> TopRecentPosts();
     }
 }
