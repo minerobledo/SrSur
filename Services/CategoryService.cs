@@ -35,9 +35,9 @@ namespace SrSur.Services
             var category = await _categoryRepository.GetByIdAsync(dto.Id);
             if (category != null)
             {
-                category!.Categoryname = (category!.Categoryname != dto.CategoryName!) ? dto.CategoryName! : category!.Categoryname;
-                category!.Slug = (category!.Slug != dto.Slug!) ? dto.Slug! : category!.Slug;
-                category!.Categorydescription = (category!.Categorydescription != dto.CategoryDescription!) ? dto.CategoryDescription! : category!.Categorydescription;
+                category!.Categoryname =  dto.CategoryName! ?? category!.Categoryname;
+                category!.Slug = dto.Slug! ?? category!.Slug;
+                category!.Categorydescription = dto.CategoryDescription! ?? category!.Categorydescription;
                 await _categoryRepository.UpdateAsync(category);
 
                 return new Responce<bool>() { data = true, succeeded = true };
