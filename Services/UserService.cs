@@ -49,7 +49,7 @@ namespace SrSur.Services
             usuario.Refreshtokens.Add(refreshToken);
             await _userRepository.UpdateAsync(usuario);
 
-            var data = new LoginResponceDTO { JWT = jwt, RefreshToken = refreshToken.Token, UserId = usuario.Id }
+            var data = new LoginResponceDTO { JWT = jwt, RefreshToken = refreshToken.Token, UserId = usuario.Id };
             return new Responce<LoginResponceDTO?> {data= data, succeeded= true };
         }
 
