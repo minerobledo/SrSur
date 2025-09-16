@@ -38,6 +38,9 @@ namespace SrSur.Services
                 category!.Categoryname =  dto.CategoryName! ?? category!.Categoryname;
                 category!.Slug = dto.Slug! ?? category!.Slug;
                 category!.Categorydescription = dto.CategoryDescription! ?? category!.Categorydescription;
+                category!.Createdate = DateTime.SpecifyKind(category.Createdate, DateTimeKind.Utc);
+                category.Lasteditdate = DateTime.UtcNow; 
+
                 await _categoryRepository.UpdateAsync(category);
 
                 return new Responce<bool>() { data = true, succeeded = true };
