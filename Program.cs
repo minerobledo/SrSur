@@ -49,7 +49,7 @@ Console.WriteLine("Iniciando configuración de políticas CORS.");
 // Y volvemos a la línea original para leer desde builder.Configuration
 var allowedOrigins = new[]
 {
-    "https://sr-sur-agency.web.app/#/home",
+    "https://sr-sur-agency.web.app",
     "186.122.104.210"
 
 }
