@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.HttpOverrides;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -48,6 +50,47 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();  <-- lo comentamos o eliminamos
 
 app.UseAuthorization();
+
+// Configuración de CORS
+Console.WriteLine("Iniciando configuración de ForwardedHeadersOptions para proxies.");
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+       ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto | ForwardedHeaders.XForwardedHost;
+    options.KnownNetworks.Clear(); // Lo agregás si usás un proxy externo
+    options.KnownProxies.Clear();
+});
+Console.WriteLine("ForwardedHeadersOptions configuradas.");
+
+Console.WriteLine("Iniciando configuración de políticas CORS.");
+
+// --- CAMBIO CLAVE AQUÍ: VOLVER A LEER DESDE LA CONFIGURACIÓN ---
+// Comentamos o eliminamos la línea de hardcoding
+// var hardcodedAllowedOrigins = new string[] { /* ... */ };
+// Y volvemos a la línea original para leer desde builder.Configuration
+var allowedOrigins = new[]
+{
+    "https://sr-sur-agency.web.app/#/home",
+    "186.122.104.210"
+
+}
+.Where(origin => !string.IsNullOrWhiteSpace(origin)) // Filtrar nulos o vacíos
+.ToArray();
+// Mantenemos este log para confirmar qué valores se están leyendo.
+Console.WriteLine($"Orígenes permitidos leídos de la configuración (Cors:AllowedOrigins): [{string.Join(", ", allowedOrigins)}]");
+
+builder.Services.AddCors(options =>
+{
+    Console.WriteLine("Agregando política CORS 'DefaultPolicy'.");
+    options.AddPolicy("DefaultPolicy", policy =>
+    {
+        policy.WithOrigins(allowedOrigins) // <-- Usamos la variable 'allowedOrigins' que se lee de la configuración
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+        Console.WriteLine($"Política 'DefaultPolicy' configurada con: Orígenes: {string.Join(", ", allowedOrigins)}, AllowAnyHeader, AllowAnyMethod, AllowCredentials.");
+    });
+});
 
 // Mapear controladores
 app.MapControllers();
