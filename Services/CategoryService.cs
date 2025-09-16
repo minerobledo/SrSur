@@ -15,8 +15,8 @@ namespace SrSur.Services
         }
         public async Task<Responce<bool>> CreateCategory(string name, long? parent, string? slug, string descrption)
         {
-
-            if (_categoryRepository.GetByNameAsync(name) == null)
+            var cat = await _categoryRepository.GetByNameAsync(name);
+            if (cat == null)
             {
                 var category = new Category() { Categoryname = name, Slug = slug, Categorydescription = descrption };
                 category.Parentid = (parent != null)? parent.Value : null;
