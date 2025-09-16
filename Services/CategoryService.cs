@@ -13,7 +13,7 @@ namespace SrSur.Services
         {
             _categoryRepository = categoryRepository;
         }
-        public async Task<Responce<bool>> CreateCategory(string name, long? parent, string slug, string descrption)
+        public async Task<Responce<bool>> CreateCategory(string name, long? parent, string? slug, string descrption)
         {
 
             if (_categoryRepository.GetByNameAsync(name) == null)
