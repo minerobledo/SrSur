@@ -28,7 +28,7 @@ namespace SrSur.Services
 
         public string GenerateToken(string email)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secret));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwt["Key"]!));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 
