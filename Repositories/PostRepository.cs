@@ -13,7 +13,7 @@ namespace SrSur.Repositories
         public readonly SrsurDbContext _context;
         public readonly DbSet<Post> _dbset;
 
-        public PostRepository(SrsurDbContext context, DbSet<Post> dbset)
+        public PostRepository(SrsurDbContext context)
         {
             _context = context;
             _dbset = context.Set<Post>();

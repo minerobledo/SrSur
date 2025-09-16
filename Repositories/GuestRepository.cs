@@ -11,7 +11,7 @@ namespace SrSur.Repositories
         private readonly SrsurDbContext _context;
         private readonly DbSet<Guest> _dbset;
 
-        public GuestRepository(SrsurDbContext context, DbSet<Guest> dbset)
+        public GuestRepository(SrsurDbContext context)
         {
             _context = context;
             _dbset = dbset;

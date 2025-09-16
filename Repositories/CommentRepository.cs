@@ -12,7 +12,7 @@ namespace SrSur.Repositories
         public readonly SrsurDbContext _context;
         public readonly DbSet<Comment> _dbset;
 
-        public CommentRepository(SrsurDbContext context, DbSet<Post> dbset)
+        public CommentRepository(SrsurDbContext context)
         {
             _context = context;
             _dbset = context.Set<Comment>();
