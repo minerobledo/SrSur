@@ -16,7 +16,7 @@ public partial class Post
 
     public string Commentstatus { get; set; } = null!;
     [Column(TypeName = "timestamp with time zone")]
-    public DateTime Createdate { get; set; }
+    public DateTime Createdate { get; set; } = DateTime.Now;
     [Column(TypeName = "timestamp with time zone")]
     public DateTime? Publishdate { get; set; }
     [Column(TypeName = "timestamp with time zone")]

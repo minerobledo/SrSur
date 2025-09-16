@@ -16,7 +16,7 @@ public partial class Guest
 
     public string Device { get; set; } = null!;
     [Column(TypeName = "timestamp with time zone")]
-    public DateTime Datecreate { get; set; }
+    public DateTime Datecreate { get; set; }= DateTime.Now;
 
     public string? Country { get; set; }
 

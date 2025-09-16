@@ -14,7 +14,7 @@ public partial class Tag
 
     public string? Tagdescription { get; set; }
     [Column(TypeName = "timestamp with time zone")]
-    public DateTime Createdate { get; set; }
+    public DateTime Createdate { get; set; } = DateTime.UtcNow;
 
     [Column(TypeName = "timestamp with time zone")]
     public DateTime? Lasteditdate { get; set; }

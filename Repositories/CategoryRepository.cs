@@ -60,9 +60,9 @@ namespace SrSur.Repositories
         {
             return await _context.Categories
                 .Where(t => t.Categoryname.StartsWith(prefix))   // empieza con "prefix"
+                .OrderBy(t => t.Categoryname)                    // ordenados por nombre
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .OrderBy(t => t.Categoryname)                    // ordenados por nombre
                 .ToListAsync();
         }
 
