@@ -30,27 +30,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
-//using (var scope = app.Services.CreateScope())
-//{
-//    var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
-//    db.Database.Migrate();
-//}
-
-// --- Middleware ---
-if (app.Environment.IsDevelopment())
-{
-    Console.WriteLine("sawger agregado");
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-// No necesitamos redirección HTTPS
-// app.UseHttpsRedirection();  <-- lo comentamos o eliminamos
-
-app.UseAuthorization();
-
 // Configuración de CORS
 Console.WriteLine("Iniciando configuración de ForwardedHeadersOptions para proxies.");
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -91,6 +70,29 @@ builder.Services.AddCors(options =>
         Console.WriteLine($"Política 'DefaultPolicy' configurada con: Orígenes: {string.Join(", ", allowedOrigins)}, AllowAnyHeader, AllowAnyMethod, AllowCredentials.");
     });
 });
+
+var app = builder.Build();
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<SrsurDbContext>();
+//    db.Database.Migrate();
+//}
+
+// --- Middleware ---
+if (app.Environment.IsDevelopment())
+{
+    Console.WriteLine("sawger agregado");
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// No necesitamos redirección HTTPS
+// app.UseHttpsRedirection();  <-- lo comentamos o eliminamos
+
+app.UseAuthorization();
+
+
 
 // Mapear controladores
 app.MapControllers();
