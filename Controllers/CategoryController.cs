@@ -18,7 +18,7 @@ namespace SrSur.Controllers
         [Authorize]
         public async Task<ActionResult> CreateCategory([FromBody] CategoryDto d)
         {
-            if (d.IsComplete() == false) return BadRequest("Faltan Datos");
+            
             try
             {
                 var responce = await _categoryService.CreateCategory(d.CategoryName,d.ParentId,d.Slug,d.CategoryDescription);
