@@ -17,7 +17,7 @@ namespace SrSur.Services
 
         public async Task<Responce<bool>> CreateTag(TagDto t)
         {
-            Console.WriteLine(t.TagName);
+            
             var tag = await _tagRepository.GetByNameAsync(t.TagName);
             if (tag == null)
             {
