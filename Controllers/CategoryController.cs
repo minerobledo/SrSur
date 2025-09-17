@@ -43,7 +43,7 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpGet("DeleteCategory/{id}")]
+        [HttpDelete("DeleteCategory/{id}")]
         [Authorize]
         public async Task<ActionResult> DeleteCategory([FromRoute] long id)
         {
