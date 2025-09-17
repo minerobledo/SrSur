@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using SrSur.Interface;
 using SrSur.Models.DTOs;
+using SrSur.Models.DTOs.Imput.Tag;
 using SrSur.Models.Entities;
 
 namespace SrSur.Services
@@ -14,12 +15,12 @@ namespace SrSur.Services
             _tagRepository = tagRepository;
         }
 
-        public async Task<Responce<bool>> CreateTag(string TagName, string slug, string descrption)
+        public async Task<Responce<bool>> CreateTag(TagDto t)
         {
 
-            if (_tagRepository.GetByNameAsync(TagName) == null)
+            if (_tagRepository.GetByNameAsync(t.TagName) == null)
             {
-                var newTag = new Tag() { Tagname = TagName, Slug = slug, Tagdescription = descrption };
+                var newTag = new Tag() { Tagname = t.TagName, Slug = t.Slug, Tagdescription = t.TagDescription};
                 await _tagRepository.AddAsync(newTag);
                 return new Responce<bool>() { data = true, succeeded = true };
             }

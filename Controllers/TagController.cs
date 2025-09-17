@@ -16,10 +16,10 @@ namespace SrSur.Controllers
         [HttpPost("AdminCreateTag")]
         public async Task<ActionResult> CreateTag([FromBody] TagDto d)
         {
-            if (d.IsComplete() == false) return BadRequest("Faltan Datos");
+            
             try
             {
-                var responce = await _tagSeService.CreateTag(d.TagName,d.Slug,d.TagDescription);
+                var responce = await _tagSeService.CreateTag(d);
                 return Ok(responce);
             }
             catch (Exception ex)
@@ -41,7 +41,7 @@ namespace SrSur.Controllers
             }
         }
         [HttpDelete("DeleteTag/{id}")]
-        public async Task<ActionResult> DeleteTag([FromQuery] long id)
+        public async Task<ActionResult> DeleteTag([FromRoute] long id)
         {
             try
             {
@@ -53,8 +53,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPost("GetTag")]
-        public async Task<ActionResult> GetTag ([FromBody] int page)
+        [HttpGet("GetTag/{page}")]
+        public async Task<ActionResult> GetTag ([FromRoute] int page)
         {
             try
             {
