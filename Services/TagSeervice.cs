@@ -39,6 +39,8 @@ namespace SrSur.Services
                 tag!.Tagname = (tag!.Tagname != tagName!) ? tagName! : tag!.Tagname;
                 tag!.Slug = (tag!.Slug != slug!) ? slug! : tag!.Slug;
                 tag!.Tagdescription = (tag!.Tagdescription != descrption!) ? descrption! : tag!.Tagdescription;
+                tag!.Createdate = DateTime.SpecifyKind(tag.Createdate, DateTimeKind.Utc);
+                tag!.Lasteditdate = DateTime.UtcNow;
                 await _tagRepository.UpdateAsync(tag);
 
                 return new Responce<bool>() { data = true, succeeded = true };
