@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SrSur.Data;
 using SrSur.Interface;
+using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 using System.Linq;
 
@@ -46,10 +47,7 @@ namespace SrSur.Repositories
         }
         public async Task<List<Post>> SerchByFilterAsync(Dictionary<string, object> filters,int pageNumber, int pageSize)
         {
-            IQueryable<Post> query = _context.Posts
-                .Include(p => p.Categories)
-                .Include(p => p.Tags)
-                .Include(p => p.Comments);
+            IQueryable<Post> query = _context.Posts;
 
             foreach (var filtro in filters)
             {
@@ -85,7 +83,29 @@ namespace SrSur.Repositories
             query.Skip((pageNumber - 1) * pageSize);
 
             // Limitar resultados
-            query = query.Take(pageSize);
+            query = query
+                .Take(pageSize)
+                .Select(p => new Post
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Body = p.Body,
+                    Createdate = p.Createdate,
+                    Publishdate = p.Publishdate,
+                    Lasteditdate = p.Lasteditdate,
+                    Poststatus = p.Poststatus,
+                    Excerpt = p.Excerpt,
+                    Author = p.Author,
+                    Categories = p.Categories.Select(c => new Category {
+                        Id =c.Id,
+                        Categoryname =c.Categoryname
+                    }).ToList(),
+                    Tags = p.Tags.Select(t=> new Tag {
+                        Id = t.Id,
+                        Tagname = t.Tagname,
+                    }).ToList(),
+                    Comments = p.Comments
+                });
 
             return await query.ToListAsync(); 
         }
