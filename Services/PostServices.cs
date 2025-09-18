@@ -1,6 +1,7 @@
 ﻿
 using SrSur.Interface;
 using SrSur.Models.DTOs;
+using SrSur.Models.DTOs.Imput.Post;
 using SrSur.Models.Entities;
 using SrSur.Repositories;
 
@@ -15,17 +16,18 @@ namespace SrSur.Services
             _postRepository = postRepository;
         }
 
-        public async Task<Responce<bool>> CreatePost(long authorId, string titel, string body, string comentStatus, string exert)
+        public async Task<Responce<bool>> CreatePost(CreatePostDto d)
         {
 
             var comment = new Post()
             {
-               Authorid = authorId,
-               Title = titel,
-               Body = body,
-               Commentstatus = comentStatus,
-               Poststatus = "Pending",
-               Excerpt = exert
+                Authorid = d.AuthorId,
+                Title = d.Title,
+                Body = d.Body,
+                Commentstatus = d.CommentStatus,
+                Poststatus = d.PostStatus,
+                Excerpt = d.Excerpt,
+                Createdate = DateTime.UtcNow
 
             };
 

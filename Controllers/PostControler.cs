@@ -18,10 +18,10 @@ namespace SrSur.Controllers
         [Authorize]
         public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
         {
-            if (d.IsComplete() == false) return BadRequest("Faltan Datos");
+            
             try
             {
-                var responce = await _postServices.CreatePost(d.AuthorId,d.Title!,d.Body!,d.CommentStatus!,d.Excerpt!);
+                var responce = await _postServices.CreatePost(d);
                 return Ok(responce);
             }
             catch (Exception ex)
