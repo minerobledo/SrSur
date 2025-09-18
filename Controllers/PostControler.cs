@@ -26,6 +26,7 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
