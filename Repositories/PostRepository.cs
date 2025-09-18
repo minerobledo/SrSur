@@ -104,7 +104,11 @@ namespace SrSur.Repositories
                         Id = t.Id,
                         Tagname = t.Tagname,
                     }).ToList(),
-                    Comments = p.Comments
+                    Comments = p.Comments,
+                    Postsvisitedbyguests = p.Postsvisitedbyguests.Select(p => new Postsvisitedbyguest
+                    {
+                        Guestid = p.Guestid,
+                    }).ToList()
                 });
 
             return await query.ToListAsync(); 

@@ -35,4 +35,6 @@ public partial class Post
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
+
+    
 }
