@@ -1,4 +1,5 @@
-﻿using SrSur.Models.Entities;
+﻿using SrSur.Models.DTOs.output;
+using SrSur.Models.Entities;
 
 namespace SrSur.Interface
 {
@@ -13,6 +14,7 @@ namespace SrSur.Interface
 
         Task<List<Category>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize);
         Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize);
+        List<CategoryOutnDto> TransformList(List<Category> list);
 
     }
 }

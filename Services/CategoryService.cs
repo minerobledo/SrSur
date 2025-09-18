@@ -1,6 +1,8 @@
-﻿using SrSur.Interface;
+﻿using AutoMapper;
+using SrSur.Interface;
 using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Category;
+using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 using SrSur.Repositories;
 
@@ -9,9 +11,10 @@ namespace SrSur.Services
     public class CategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-
-        public CategoryService(ICategoryRepository categoryRepository)
+        private readonly IMapper _mapper;
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
+            _mapper =mapper;
             _categoryRepository = categoryRepository;
         }
         public async Task<Responce<bool>> CreateCategory(string name, long? parent, string? slug, string descrption)
@@ -66,10 +69,10 @@ namespace SrSur.Services
             }
         }
 
-        public async Task<Responce<List<Category>>> GetCategory(int page)
+        public async Task<Responce<List<CategoryOutnDto>>> GetCategory(int page)
         {
             var categories = await _categoryRepository.GetPaginatedAsync(page, 50);
-            return new Responce<List<Category>>() { data = categories, succeeded = true };
+            return new Responce<List<CategoryOutnDto>>() { data = _categoryRepository.TransformList( categories), succeeded = true };
         }
 
         public async Task<Responce<List<Category>>> SerchCategory(string prefix, int page)

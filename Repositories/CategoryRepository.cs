@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SrSur.Data;
 using SrSur.Interface;
+using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace SrSur.Repositories
 {
@@ -9,10 +12,12 @@ namespace SrSur.Repositories
     {
         private readonly SrsurDbContext _context;
         private readonly DbSet<Category> _dbset;
-        public CategoryRepository(SrsurDbContext context)
+        private readonly IMapper _mapper;
+        public CategoryRepository(SrsurDbContext context,IMapper mapper)
         {
             _context = context;
             _dbset =context.Set<Category>();
+            _mapper = mapper;
         }
 
         public async Task AddAsync(Category category)
@@ -61,16 +66,14 @@ namespace SrSur.Repositories
             pageNumber = Math.Max(pageNumber, 1);
             pageSize = Math.Max(pageSize, 1);
 
-            
-                return await _context.Categories
+
+            return await _context.Categories
                 .Where(t => t.Categoryname.StartsWith(prefix))   // empieza con "prefix"
                 .OrderBy(t => t.Categoryname)                    // ordenados por nombre
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
-            
            
-
         }
 
         public async Task<List<Category>> GetPaginatedAsync(int pageNumber, int pageSize)
@@ -86,5 +89,16 @@ namespace SrSur.Repositories
           
                
         }
+        public List<CategoryOutnDto> TransformList(List<Category> list)
+        {
+            List<CategoryOutnDto> r = new List<CategoryOutnDto>();
+            foreach (Category t in list)
+            {
+                r.Add(_mapper.Map<CategoryOutnDto>(t));
+            }
+            return r;
+        }
+
+       
     }
 }

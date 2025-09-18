@@ -2,6 +2,7 @@
 using SrSur.Interface;
 using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Tag;
+using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 
 namespace SrSur.Services
@@ -66,10 +67,10 @@ namespace SrSur.Services
             }
         }
 
-        public async Task<Responce<List<Tag>>> GetTags(int page)
+        public async Task<Responce<List<TagOutDto>>> GetTags(int page)
         {
             var tags = await _tagRepository.GetPaginatedAsync(page, 50);
-            return new Responce<List<Tag>>() { data = tags, succeeded = true };
+            return new Responce<List<TagOutDto>>() { data = _tagRepository.TransformList( tags), succeeded = true };
         }
 
         public async Task<Responce<List<Tag>>> SerchTag(string prefix, int page)

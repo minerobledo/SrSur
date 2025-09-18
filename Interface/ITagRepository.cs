@@ -1,4 +1,5 @@
-﻿using SrSur.Models.Entities;
+﻿using SrSur.Models.DTOs.output;
+using SrSur.Models.Entities;
 
 namespace SrSur.Interface
 {
@@ -12,5 +13,6 @@ namespace SrSur.Interface
         Task<Tag?> GetByIdAsync(long id);
         Task<Tag?> GetByNameAsync(string name);
         Task<List<Tag>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize);
+        List<TagOutDto> TransformList(List<Tag> list);
     }
 }

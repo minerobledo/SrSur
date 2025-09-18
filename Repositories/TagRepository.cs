@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using SrSur.Data;
 using SrSur.Interface;
+using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 
 namespace SrSur.Repositories
@@ -9,11 +11,13 @@ namespace SrSur.Repositories
     {
         public readonly SrsurDbContext _context;
         public readonly DbSet<Tag> _dbset;
+        public readonly IMapper _mapper;
 
-        public TagRepository(SrsurDbContext context)
+        public TagRepository(SrsurDbContext context, IMapper mapper)
         {
             _context = context;
             _dbset = context.Set<Tag>();
+            _mapper = mapper;
         }
 
         public async Task AddAsync(Tag tag)
@@ -38,11 +42,14 @@ namespace SrSur.Repositories
 
         public async Task<List<Tag>> GetPaginatedAsync(int pageNumber, int pageSize)
         {
+            pageNumber = Math.Max(pageNumber, 1);
+            pageSize = Math.Max(pageSize, 1);
             return await _dbset
                 .OrderBy(t => t.Tagname)
                 .Skip((pageNumber - 1) * pageSize) // salta los registros previos
                 .Take(pageSize)                    // trae solo los que corresponden
                 .ToListAsync();
+           
         }
         public async Task<Tag?> GetByIdAsync(long id)
         {
@@ -51,12 +58,16 @@ namespace SrSur.Repositories
         }
         public async Task<List<Tag>> GetByPrefixAsync(string prefix, int pageNumber, int pageSize)
         {
+            pageNumber = Math.Max(pageNumber, 1);
+            pageSize = Math.Max(pageSize, 1);
             return await _context.Tags
                 .Where(t => t.Tagname.StartsWith(prefix))   // empieza con "prefix"
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .OrderBy(t => t.Tagname)                    // ordenados por nombre
                 .ToListAsync();
+            
+
         }
         public async Task<Tag?> GetByNameAsync(string name)
         {
@@ -68,6 +79,16 @@ namespace SrSur.Repositories
         {
             _dbset.Update(tag);
             await _context.SaveChangesAsync();
+        }
+
+        public List<TagOutDto> TransformList(List<Tag> list)
+        {
+            List<TagOutDto> r = new List<TagOutDto>();
+            foreach (Tag t in list)
+            {
+                r.Add(_mapper.Map<TagOutDto>(t));
+            }
+            return r;
         }
     }
 }

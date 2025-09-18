@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SrSur.Data;
 using SrSur.Interface;
+using SrSur.Models.DTOs.output;
+using SrSur.Models.Entities;
 using SrSur.Repositories;
 using SrSur.Services;
 using System;
+using System.Security.AccessControl;
 using System.Text;
 
 namespace SrSur
@@ -48,6 +52,8 @@ namespace SrSur
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt["Key"]!))
                 };
             });
+
+            AutomaterConfig(services);
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IGuestRepository, GuestRepository>();
@@ -66,5 +72,19 @@ namespace SrSur
             services.AddScoped<TagSeervice>();
             services.AddScoped<UserService>();
         }
+        private static void AutomaterConfig(IServiceCollection services)
+        {
+            var loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.CreateMap<Category,CategoryOutnDto>();
+                mc.CreateMap<Tag, TagOutDto>();
+               
+            }, loggerFactory);
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+        }
     }
+
 }
