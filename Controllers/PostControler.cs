@@ -14,7 +14,7 @@ namespace SrSur.Controllers
         {
             _postServices = postServices;
         }
-        [HttpPost("CreatePost")]
+        [HttpPost("AdminCreatePost")]
         [Authorize]
         public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
         {

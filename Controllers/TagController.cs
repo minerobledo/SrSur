@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SrSur.Models.DTOs.Imput.Post;
 using SrSur.Models.DTOs.Imput.Tag;
 using SrSur.Services;
@@ -14,6 +15,7 @@ namespace SrSur.Controllers
             _tagSeService = tagSeService;
         }
         [HttpPost("AdminCreateTag")]
+        [Authorize]
         public async Task<ActionResult> CreateTag([FromBody] TagDto d)
         {
             
@@ -28,6 +30,7 @@ namespace SrSur.Controllers
             }
         }
         [HttpPatch("AdminEditTag")]
+        [Authorize]
         public async Task<ActionResult> EditTag([FromBody] EditTagDto d)
         {
             try
@@ -40,7 +43,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpDelete("DeleteTag/{id}")]
+        [HttpDelete("AdminDeleteTag/{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteTag([FromRoute] long id)
         {
             try

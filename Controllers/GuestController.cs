@@ -29,7 +29,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpDelete("DeleteGuset/{id}")]
+        [HttpDelete("AdminDeleteGuset/{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteGuest([FromQuery] long id)
         {
             try
