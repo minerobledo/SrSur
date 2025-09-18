@@ -35,7 +35,7 @@ namespace SrSur.Controllers
         {
             try
             {
-                var responce = await _postServices.EditPost(d.Id, d.Title, d.Body, d.CommentStatus, d.Excerpt);
+                var responce = await _postServices.EditPost(d);
                 return Ok(responce);
             }
             catch (Exception ex)

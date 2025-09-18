@@ -10,16 +10,20 @@ namespace SrSur.Services
     public class PostServices
     {
         private readonly IPostRepository _postRepository;
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly ITagRepository _tagRepository;
 
-        public PostServices(IPostRepository postRepository)
+        public PostServices(IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository)
         {
             _postRepository = postRepository;
+            _categoryRepository = categoryRepository;
+            _tagRepository = tagRepository;
         }
 
         public async Task<Responce<bool>> CreatePost(CreatePostDto d)
         {
 
-            var comment = new Post()
+            var post = new Post()
             {
                 Authorid = d.AuthorId,
                 Title = d.Title,
@@ -27,26 +31,56 @@ namespace SrSur.Services
                 Commentstatus = d.CommentStatus,
                 Poststatus = d.PostStatus,
                 Excerpt = d.Excerpt,
-                Createdate = DateTime.UtcNow
-
+                Createdate = DateTime.UtcNow,
+                
             };
+            if(d.CategoryId != null)
+            {
+                var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
+                if (cat != null) post.Categories.Add(cat);
+            }
+            if (d.TagsId != null)
+            {
+               
+                foreach(var t in d.TagsId)
+                {
+                   var temp = await _tagRepository.GetByIdAsync(t.Value);
+                   if (temp != null) post.Tags.Add(temp);
+                }           
+            }
 
-
-            await _postRepository.AddAsync(comment);
+            await _postRepository.AddAsync(post);
             return new Responce<bool>() { data = true, succeeded = true };
 
 
         }
 
-        public async Task<Responce<bool>> EditPost(long id, string? titel, string? body, string? comentStatus, string? exert)
+        public async Task<Responce<bool>> EditPost(EditPostDto d)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+
+            var post = await _postRepository.GetByIdAsync(d.Id);
             if (post != null)
             {
-                post!.Title = (post!.Title != titel!) ? titel! : post!.Title;
-                post!.Body = (post!.Body != body!) ? body! : post!.Body;
-                post!.Commentstatus = (post.Commentstatus != comentStatus!) ? comentStatus! : post.Commentstatus;
-                post!.Excerpt = (post.Excerpt != exert)? exert! :post.Excerpt;
+                post!.Title = (post!.Title != d.Title!) ? d.Title! : post!.Title;
+                post!.Body = (post!.Body != d.Body!) ? d.Body! : post!.Body;
+                post!.Commentstatus = (post.Commentstatus != d.CommentStatus!) ? d.CommentStatus! : post.Commentstatus;
+                post!.Excerpt = (post.Excerpt != d.Excerpt)? d.Excerpt! :post.Excerpt;
+               
+                if (d.CategoryId != null)
+                {
+                    var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
+                    if (cat != null) post.Categories.Add(cat);
+                }
+                if (d.TagsId != null)
+                {
+
+                    foreach (var t in d.TagsId)
+                    {
+                        var temp = await _tagRepository.GetByIdAsync(t.Value);
+                        if (temp != null) post.Tags.Add(temp);
+                    }
+                }
+
 
                 await _postRepository.UpdateAsync(post);
 
