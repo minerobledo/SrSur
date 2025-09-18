@@ -46,7 +46,10 @@ namespace SrSur.Repositories
         }
         public async Task<List<Post>> SerchByFilterAsync(Dictionary<string, object> filters,int pageNumber, int pageSize)
         {
-            IQueryable<Post> query = _context.Posts;
+            IQueryable<Post> query = _context.Posts
+                .Include(p => p.Categories)
+                .Include(p => p.Tags)
+                .Include(p => p.Comments);
 
             foreach (var filtro in filters)
             {
@@ -84,7 +87,7 @@ namespace SrSur.Repositories
             // Limitar resultados
             query = query.Take(pageSize);
 
-            return await query.ToListAsync();
+            return await query.ToListAsync(); 
         }
         
 

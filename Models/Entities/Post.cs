@@ -22,7 +22,7 @@ public partial class Post
     [Column(TypeName = "timestamp with time zone")]
     public DateTime? Lasteditdate { get; set; }
 
-    public string Poststatus { get; set; } = null!; //
+    public string Poststatus { get; set; } = null!; //allow, notAlow
 
     public string? Excerpt { get; set; }
 
