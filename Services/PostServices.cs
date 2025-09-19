@@ -125,9 +125,10 @@ namespace SrSur.Services
                             if(filter.Value is string b) trueFiltros.Add(filter.Key, filter.Value);
                             break;
                         case "Status":
+                            Console.WriteLine("Si entra 1");
                             if (admin == true && filter.Value is string e)
                             {
-                                Console.WriteLine("Si entra ");
+                                Console.WriteLine("Si entra 2");
                                 trueFiltros.Add(filter.Key, filter.Value);
 
                             }
