@@ -12,7 +12,7 @@ namespace SrSur.Models.DTOs.Imput.Guest
 
         public string? Referrer { get; set; }
 
-        public string Device { get; set; } = null!;
+        
         
         public string? Country { get; set; }
 

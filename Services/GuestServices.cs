@@ -14,7 +14,7 @@ namespace SrSur.Services
             _guestRepository = guestRepository;
         }
 
-        public async Task<Responce<bool>> CreateGuset(string userAgent,string ipAdres, string referer, string device, string country, string region)
+        public async Task<Responce<bool>> CreateGuset(string userAgent,string ipAdres, string referer, string country, string region)
         {
 
             var guest = new Guest()
@@ -22,7 +22,7 @@ namespace SrSur.Services
                 Useragent = userAgent,
                 Ipaddress = ipAdres,
                 Referrer = referer,
-                Device = device,
+               
                 Country = country,
                 Region = region
             };

@@ -129,9 +129,7 @@ public partial class SrsurDbContext : DbContext
             entity.Property(e => e.Datecreate)
                 .HasColumnType("timestamp with time zone")
                 .HasColumnName("datecreate");
-            entity.Property(e => e.Device)
-                .HasMaxLength(100)
-                .HasColumnName("device");
+           
             entity.Property(e => e.Ipaddress)
                 .HasMaxLength(50)
                 .HasColumnName("ipaddress");

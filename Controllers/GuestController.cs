@@ -21,7 +21,7 @@ namespace SrSur.Controllers
             if (dto.IsComplete() == false) return BadRequest("Faltan Datos");
             try
             {
-                var responce = await _services.CreateGuset(dto.Useragent,dto.Ipaddress,dto.Referrer,dto.Device,dto.Country,dto.Region);
+                var responce = await _services.CreateGuset(dto.Useragent,dto.Ipaddress,dto.Referrer,dto.Country,dto.Region);
                 return Ok(responce);
             }
             catch (Exception ex)
