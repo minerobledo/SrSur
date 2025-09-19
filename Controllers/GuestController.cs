@@ -31,7 +31,7 @@ namespace SrSur.Controllers
         }
         [HttpDelete("AdminDeleteGuset/{id}")]
         [Authorize]
-        public async Task<ActionResult> DeleteGuest([FromQuery] long id)
+        public async Task<ActionResult> DeleteGuest([FromRoute] long id)
         {
             try
             {
