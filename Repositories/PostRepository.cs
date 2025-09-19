@@ -55,7 +55,7 @@ namespace SrSur.Repositories
                 {
                     
                     case "Titel":
-                        Console.WriteLine(filtro.Value.ToString()!);
+                       
                         query = query.Where(r => r.Title!.StartsWith(filtro.Value.ToString()!));
                         break;
                    
@@ -63,13 +63,13 @@ namespace SrSur.Repositories
                         query = query.Where(p => p.Body! .Contains(filtro.Value.ToString()!));
                         break;
                     case "Status":
-                        Console.WriteLine("aca el status es :"+filtro.Value.ToString()!);
+                        
                         query = query.Where(p=> p.Poststatus == filtro.Value.ToString());
                         break;
                     case "CategoryId":
                         query = query.Where(p => p.Categories.Any(c => c.Id == (long)filtro.Value || c.Parentid == (long)filtro.Value));
                         break;
-                    case "Tag":
+                    case "TagId":
                         query = query.Where(p => p.Tags.Any(t => t.Id == (long)filtro.Value));
                         break;
                     default:

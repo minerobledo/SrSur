@@ -119,20 +119,17 @@ namespace SrSur.Services
                     {
                         case "Titel":
                             // code block
-                            if(filter.Value is string a) trueFiltros.Add(filter.Key, filter.Value);
+                            if(filter.Value is JsonElement je1 && je1.ValueKind == JsonValueKind.String) trueFiltros.Add(filter.Key, je1.GetString());
                             break;
                         case "ContainsBody":
                             // code block
-                            if(filter.Value is string b) trueFiltros.Add(filter.Key, filter.Value);
+                            if(filter.Value is JsonElement je2 && je2.ValueKind == JsonValueKind.String) trueFiltros.Add(filter.Key, je2.GetString());
                             break;
                         case "Status":
-                            Console.WriteLine("Si entra 1");
-                            Console.WriteLine($"admin: {admin}");
-                            Console.WriteLine($"filter.Value type: {filter.Value.GetType()} value: {filter.Value}");
-                            if (admin == true && filter.Value is JsonElement je && je.ValueKind == JsonValueKind.String)
+                          
+                            if (admin == true && filter.Value is JsonElement je3 && je3.ValueKind == JsonValueKind.String)
                             {
-                                string status = je.GetString(); // ✅ extrae el string real
-                                Console.WriteLine($"Si entra 2 con status: {status}");
+                                string status = je3.GetString(); 
                                 trueFiltros.Add(filter.Key, status);
 
                             }
@@ -140,7 +137,7 @@ namespace SrSur.Services
                         case "CategoryId":
                             if (long.TryParse(filter.Value.ToString(), out long c))trueFiltros.Add(filter.Key,c);
                             break;
-                        case "Tag":
+                        case "TagId":
                             if (long.TryParse(filter.Value.ToString(), out long d)) trueFiltros.Add(filter.Key,d);
                             break;
 
