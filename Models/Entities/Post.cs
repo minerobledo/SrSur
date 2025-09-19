@@ -14,7 +14,8 @@ public partial class Post
 
     public string? Body { get; set; }
 
-    public string Commentstatus { get; set; } = null!;
+    public string Commentstatus { get; set; } = null!; //allow, notAlow
+
     [Column(TypeName = "timestamp with time zone")]
     public DateTime Createdate { get; set; } = DateTime.Now;
     [Column(TypeName = "timestamp with time zone")]
@@ -22,8 +23,7 @@ public partial class Post
     [Column(TypeName = "timestamp with time zone")]
     public DateTime? Lasteditdate { get; set; }
 
-    public string Poststatus { get; set; } = null!; //allow, notAlow
-
+    public string Poststatus { get; set; } = null!;// Pending , Publish
     public string? Excerpt { get; set; }
 
     public virtual User Author { get; set; } = null!;

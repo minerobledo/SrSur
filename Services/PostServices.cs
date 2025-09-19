@@ -127,6 +127,7 @@ namespace SrSur.Services
                         case "Status":
                             Console.WriteLine("Si entra 1");
                             Console.WriteLine($"admin: {admin}");
+                            Console.WriteLine($"filter.Value type: {filter.Value.GetType()} value: {filter.Value}");
                             if (admin == true && filter.Value.GetType() == typeof(string))
                             {
                                 Console.WriteLine("Si entra 2");

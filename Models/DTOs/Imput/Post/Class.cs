@@ -12,7 +12,7 @@
 
         
 
-        public string? PostStatus { get; set; } // Pending , Publish
+        public string? PostStatus { get; set; } 
 
         public string? Excerpt { get; set; }
 
