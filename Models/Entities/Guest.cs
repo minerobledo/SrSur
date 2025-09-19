@@ -14,7 +14,6 @@ public partial class Guest
 
     public string? Referrer { get; set; }
 
-    public string Device { get; set; } = null!;
     [Column(TypeName = "timestamp with time zone")]
     public DateTime Datecreate { get; set; }= DateTime.Now;
 
