@@ -55,6 +55,7 @@ namespace SrSur.Repositories
                 {
                     
                     case "Titel":
+                        Console.WriteLine(filtro.Value.ToString()!);
                         query = query.Where(r => r.Title!.StartsWith(filtro.Value.ToString()!));
                         break;
                    
