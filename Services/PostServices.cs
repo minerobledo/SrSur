@@ -4,6 +4,7 @@ using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Post;
 using SrSur.Models.Entities;
 using SrSur.Repositories;
+using System.Text.Json;
 
 namespace SrSur.Services
 {
@@ -128,10 +129,11 @@ namespace SrSur.Services
                             Console.WriteLine("Si entra 1");
                             Console.WriteLine($"admin: {admin}");
                             Console.WriteLine($"filter.Value type: {filter.Value.GetType()} value: {filter.Value}");
-                            if (admin == true && filter.Value.GetType() == typeof(string))
+                            if (admin == true && filter.Value is JsonElement je && je.ValueKind == JsonValueKind.String)
                             {
-                                Console.WriteLine("Si entra 2");
-                                trueFiltros.Add(filter.Key, filter.Value);
+                                string status = je.GetString(); // ✅ extrae el string real
+                                Console.WriteLine($"Si entra 2 con status: {status}");
+                                trueFiltros.Add(filter.Key, status);
 
                             }
                             break;
