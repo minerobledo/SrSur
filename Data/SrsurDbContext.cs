@@ -31,6 +31,8 @@ public partial class SrsurDbContext : DbContext
     public virtual DbSet<Tag> Tags { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Sponsor> Sponsors { get; set; } = null!;
+    public virtual DbSet<SponsorImage> SponsorsImages { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -317,6 +319,45 @@ public partial class SrsurDbContext : DbContext
                 .HasColumnName("nickname");
             entity.Property(e => e.Password).HasMaxLength(255);
         });
+
+        modelBuilder.Entity<Sponsor>(entity =>
+        {
+
+            entity.HasKey(e => e.Id).HasName("sponsor_pkey");
+
+            entity.ToTable("sponsors");
+
+            entity.Property(e=> e.Id).HasColumnName("id");
+            entity.Property(e=> e.Name)
+                .HasColumnName("name")
+                .HasMaxLength(50);
+            entity.Property(e=> e.Amount)
+                .HasColumnName("amount");
+            entity.Property(e => e.LastPayment)
+                .HasColumnType("timestamp with time zone")
+                .HasColumnName("lastpayment");
+            entity.Property(e => e.Paid)
+                .HasColumnName("paid");
+        });
+
+        modelBuilder.Entity<SponsorImage>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("sponsorimage_pkey");
+
+            entity.ToTable("sponsorsimage");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.SponsorID)
+                .HasColumnName("sponsorid");
+            entity.Property(e => e.Url)
+                .HasColumnName("url");
+
+            entity.HasOne(d => d.Sponsor)
+                .WithMany(p => p.SponsorImages) // esta colección la agregamos en Sponsor
+                .HasForeignKey(d => d.SponsorID)
+                .HasConstraintName("fk_sponsorimage_sponsor");
+        });
+
 
         OnModelCreatingPartial(modelBuilder);
     }

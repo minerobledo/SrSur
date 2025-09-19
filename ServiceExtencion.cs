@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SrSur.Data;
 using SrSur.Interface;
+using SrSur.Models.DTOs.Imput.Sponsor;
 using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 using SrSur.Repositories;
@@ -79,7 +80,8 @@ namespace SrSur
             {
                 mc.CreateMap<Category,CategoryOutnDto>();
                 mc.CreateMap<Tag, TagOutDto>();
-               
+                mc.CreateMap<Sponsor, CreateSponsorDto>();
+
             }, loggerFactory);
 
             IMapper mapper = mappingConfig.CreateMapper();

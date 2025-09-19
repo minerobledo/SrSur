@@ -79,11 +79,11 @@ namespace SrSur.Migrations
                         .HasColumnName("categoryname");
 
                     b.Property<DateTime>("Createdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("createdate");
 
                     b.Property<DateTime?>("Lasteditdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("lasteditdate");
 
                     b.Property<long?>("Parentid")
@@ -134,7 +134,7 @@ namespace SrSur.Migrations
                         .HasColumnName("country");
 
                     b.Property<DateTime>("Datecreate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("datecreate");
 
                     b.Property<string>("Device")
@@ -193,7 +193,7 @@ namespace SrSur.Migrations
                         .HasColumnName("country");
 
                     b.Property<DateTime>("Datecreate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("datecreate");
 
                     b.Property<string>("Device")
@@ -253,7 +253,7 @@ namespace SrSur.Migrations
                         .HasColumnName("commentstatus");
 
                     b.Property<DateTime>("Createdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("createdate");
 
                     b.Property<string>("Excerpt")
@@ -262,7 +262,7 @@ namespace SrSur.Migrations
                         .HasColumnName("excerpt");
 
                     b.Property<DateTime?>("Lasteditdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("lasteditdate");
 
                     b.Property<string>("Poststatus")
@@ -272,7 +272,7 @@ namespace SrSur.Migrations
                         .HasColumnName("poststatus");
 
                     b.Property<DateTime?>("Publishdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("publishdate");
 
                     b.Property<string>("Title")
@@ -299,7 +299,7 @@ namespace SrSur.Migrations
                         .HasColumnName("guestid");
 
                     b.Property<DateTime>("Datevisited")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("datevisited");
 
                     b.Property<int>("Visitetime")
@@ -324,11 +324,11 @@ namespace SrSur.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Createddate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("createddate");
 
                     b.Property<DateTime>("Expirydate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("expirydate");
 
                     b.Property<string>("Replacedbytoken")
@@ -360,6 +360,64 @@ namespace SrSur.Migrations
                     b.ToTable("refreshtokens", (string)null);
                 });
 
+            modelBuilder.Entity("SrSur.Models.Entities.Sponsor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision")
+                        .HasColumnName("amount");
+
+                    b.Property<DateTime>("LastPayment")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("lastpayment");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("name");
+
+                    b.Property<decimal>("Paid")
+                        .HasColumnType("numeric")
+                        .HasColumnName("paid");
+
+                    b.HasKey("Id")
+                        .HasName("sponsor_pkey");
+
+                    b.ToTable("sponsors", (string)null);
+                });
+
+            modelBuilder.Entity("SrSur.Models.Entities.SponsorImage", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("SponsorID")
+                        .HasColumnType("bigint")
+                        .HasColumnName("sponsorid");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text")
+                        .HasColumnName("url");
+
+                    b.HasKey("Id")
+                        .HasName("sponsorimage_pkey");
+
+                    b.HasIndex("SponsorID");
+
+                    b.ToTable("sponsorsimage", (string)null);
+                });
+
             modelBuilder.Entity("SrSur.Models.Entities.Tag", b =>
                 {
                     b.Property<long>("Id")
@@ -370,11 +428,11 @@ namespace SrSur.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Createdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("createdate");
 
                     b.Property<DateTime?>("Lasteditdate")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("lasteditdate");
 
                     b.Property<string>("Slug")
@@ -409,7 +467,7 @@ namespace SrSur.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Dateregister")
-                        .HasColumnType("timestamp without time zone")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("dateregister");
 
                     b.Property<string>("Email")
@@ -544,6 +602,18 @@ namespace SrSur.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SrSur.Models.Entities.SponsorImage", b =>
+                {
+                    b.HasOne("SrSur.Models.Entities.Sponsor", "Sponsor")
+                        .WithMany("SponsorImages")
+                        .HasForeignKey("SponsorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_sponsorimage_sponsor");
+
+                    b.Navigation("Sponsor");
+                });
+
             modelBuilder.Entity("SrSur.Models.Entities.Category", b =>
                 {
                     b.Navigation("InverseParent");
@@ -564,6 +634,11 @@ namespace SrSur.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Postsvisitedbyguests");
+                });
+
+            modelBuilder.Entity("SrSur.Models.Entities.Sponsor", b =>
+                {
+                    b.Navigation("SponsorImages");
                 });
 
             modelBuilder.Entity("SrSur.Models.Entities.User", b =>
