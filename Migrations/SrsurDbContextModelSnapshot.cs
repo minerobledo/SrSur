@@ -196,12 +196,6 @@ namespace SrSur.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("datecreate");
 
-                    b.Property<string>("Device")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("device");
-
                     b.Property<string>("Ipaddress")
                         .IsRequired()
                         .HasMaxLength(50)
