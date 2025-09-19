@@ -12,7 +12,7 @@ using SrSur.Data;
 namespace SrSur.Migrations
 {
     [DbContext(typeof(SrsurDbContext))]
-    [Migration("20250919201550_InitialSponsor")]
+    [Migration("20250919225104_InitialSponsor")]
     partial class InitialSponsor
     {
         /// <inheritdoc />
@@ -199,12 +199,6 @@ namespace SrSur.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("datecreate");
 
-                    b.Property<string>("Device")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("device");
-
                     b.Property<string>("Ipaddress")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -386,8 +380,8 @@ namespace SrSur.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
-                    b.Property<decimal>("Paid")
-                        .HasColumnType("numeric")
+                    b.Property<bool>("Paid")
+                        .HasColumnType("boolean")
                         .HasColumnName("paid");
 
                     b.HasKey("Id")

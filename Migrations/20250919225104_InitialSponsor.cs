@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SrSur.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialSponsor : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,8 +22,8 @@ namespace SrSur.Migrations
                     categoryname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     slug = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     categorydescription = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    createdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    lasteditdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    createdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    lasteditdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,14 +44,29 @@ namespace SrSur.Migrations
                     useragent = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     ipaddress = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     referrer = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    device = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    datecreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    datecreate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     region = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("guest_pkey", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sponsors",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    amount = table.Column<double>(type: "double precision", nullable: false),
+                    lastpayment = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    paid = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("sponsor_pkey", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,8 +78,8 @@ namespace SrSur.Migrations
                     tagname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     slug = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     tagdescription = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    createdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    lasteditdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    createdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    lasteditdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,12 +94,32 @@ namespace SrSur.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Password = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     nickname = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    dateregister = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    dateregister = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("users_pkey", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "sponsorsimage",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    sponsorid = table.Column<long>(type: "bigint", nullable: false),
+                    url = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("sponsorimage_pkey", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_sponsorimage_sponsor",
+                        column: x => x.sponsorid,
+                        principalTable: "sponsors",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,9 +132,9 @@ namespace SrSur.Migrations
                     title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     body = table.Column<string>(type: "text", nullable: true),
                     commentstatus = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    createdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    publishdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    lasteditdate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    createdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    publishdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    lasteditdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     poststatus = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     excerpt = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
                 },
@@ -121,8 +156,8 @@ namespace SrSur.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     userid = table.Column<long>(type: "bigint", nullable: false),
                     token = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    expirydate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    createddate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    expirydate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    createddate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     revoked = table.Column<bool>(type: "boolean", nullable: false, defaultValue: false),
                     replacedbytoken = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true)
                 },
@@ -149,7 +184,7 @@ namespace SrSur.Migrations
                     emailauthor = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     content = table.Column<string>(type: "text", nullable: false),
                     device = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    datecreate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    datecreate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     region = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     authorurl = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
@@ -225,7 +260,7 @@ namespace SrSur.Migrations
                     postid = table.Column<long>(type: "bigint", nullable: false),
                     guestid = table.Column<long>(type: "bigint", nullable: false),
                     visitetime = table.Column<int>(type: "integer", nullable: false),
-                    datevisited = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    datevisited = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,6 +323,11 @@ namespace SrSur.Migrations
                 column: "userid");
 
             migrationBuilder.CreateIndex(
+                name: "IX_sponsorsimage_sponsorid",
+                table: "sponsorsimage",
+                column: "sponsorid");
+
+            migrationBuilder.CreateIndex(
                 name: "users_email_key",
                 table: "users",
                 column: "email",
@@ -313,6 +353,9 @@ namespace SrSur.Migrations
                 name: "refreshtokens");
 
             migrationBuilder.DropTable(
+                name: "sponsorsimage");
+
+            migrationBuilder.DropTable(
                 name: "categories");
 
             migrationBuilder.DropTable(
@@ -323,6 +366,9 @@ namespace SrSur.Migrations
 
             migrationBuilder.DropTable(
                 name: "posts");
+
+            migrationBuilder.DropTable(
+                name: "sponsors");
 
             migrationBuilder.DropTable(
                 name: "users");
