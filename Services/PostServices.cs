@@ -143,7 +143,7 @@ namespace SrSur.Services
             }
             if (admin== false)
             {
-                trueFiltros.Add("Status", "publis");
+                trueFiltros.Add("Status", "publish");
             }
             var posts = await _postRepository.SerchByFilterAsync(trueFiltros, page, 50);
             return new Responce<List<Post>>() { data = posts, succeeded = true };
