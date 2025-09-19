@@ -63,6 +63,7 @@ namespace SrSur.Repositories
                         query = query.Where(p => p.Body! .Contains(filtro.Value.ToString()!));
                         break;
                     case "Status":
+                        Console.WriteLine(filtro.Value.ToString()!);
                         query = query.Where(p=> p.Poststatus == filtro.Value.ToString());
                         break;
                     case "CategoryId":
