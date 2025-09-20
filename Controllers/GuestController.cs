@@ -14,7 +14,7 @@ namespace SrSur.Controllers
         {
             _services = services;
         }
-        [Authorize]
+       
         [HttpPost("CreateGuest")]
         public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto dto)
         {
