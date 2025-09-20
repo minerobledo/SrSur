@@ -15,7 +15,7 @@ public partial class Guest
     public string? Referrer { get; set; }
 
     [Column(TypeName = "timestamp with time zone")]
-    public DateTime Datecreate { get; set; }= DateTime.Now;
+    public DateTime Datecreate { get; set; }= DateTime.UtcNow;
 
     public string? Country { get; set; }
 

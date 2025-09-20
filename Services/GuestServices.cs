@@ -22,7 +22,7 @@ namespace SrSur.Services
                 Useragent = userAgent,
                 Ipaddress = ipAdres,
                 Referrer = referer,
-               
+                
                 Country = country,
                 Region = region
             };
