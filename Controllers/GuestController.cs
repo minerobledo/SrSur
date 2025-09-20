@@ -18,7 +18,7 @@ namespace SrSur.Controllers
         [HttpPost("CreateGuest")]
         public async Task<IActionResult> CreateGuest([FromBody] CreateGuestDto dto)
         {
-            if (dto.IsComplete() == false) return BadRequest("Faltan Datos");
+            //if (dto.IsComplete() == false) return BadRequest("Faltan Datos");
             try
             {
                 var responce = await _services.CreateGuset(dto.Useragent,dto.Ipaddress,dto.Referrer,dto.Country,dto.Region);
