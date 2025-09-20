@@ -16,7 +16,7 @@ namespace SrSur.Services
 
         public async Task<Responce<bool>> CreateGuset(string userAgent,string ipAdres, string referer, string country, string region)
         {
-
+            Console.WriteLine(ipAdres);
             var guest = new Guest()
             {
                 Useragent = userAgent,
