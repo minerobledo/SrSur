@@ -19,13 +19,26 @@ namespace SrSur.Controllers
         /// </summary>
         /// <param name="d"></param>
         /// <returns></returns>
-        [Authorize]
         [HttpPost("AdminCreateComment")]
+        [Authorize]
         public async Task<ActionResult> CreateComment([FromBody] CreateComentDto d)
         {
             try
             {
-                var responce = await _commentServices.CreateComment(d.UserId,d.ParentId,d.Author,d.EmailAuthor,d.Content,d.Device,d.Country,d.Region,d.AuthorUrl);
+                var responce = await _commentServices.CreateAdminComment(d.PostId ,d.UserId.Value, d.ParentId,  d.Content, d.Device, d.Country, d.Region);
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpPost("CreateComment")]
+        public async Task<ActionResult> CreateCommentUser([FromBody] CreateComentDto d)
+        {
+            try
+            {
+                var responce = await _commentServices.CreateComment(d.PostId,d.ParentId,d.Author,d.EmailAuthor,d.Content,d.Device,d.Country,d.Region,d.AuthorUrl);
                 return Ok(responce);
             }
             catch (Exception ex)

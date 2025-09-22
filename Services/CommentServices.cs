@@ -8,33 +8,66 @@ namespace SrSur.Services
     public class CommentServices
     {
         private readonly ICommentRepository _commentRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
 
-        public CommentServices(ICommentRepository commentRepository)
+        public CommentServices(ICommentRepository commentRepository, IUserRepository userRepository, IPostRepository postRepository)
         {
             _commentRepository = commentRepository;
+            _userRepository = userRepository;
+            _postRepository = postRepository;
         }
 
-        public async Task<Responce<bool>> CreateComment( long? userId, long? parentId, string author, string email, string content, string device, string country, string region, string authorUrl)
+        public async Task<Responce<bool>> CreateAdminComment(long PostID, long userId, long? parentId, string content, string device, string country, string region)
         {
+            var user = await _userRepository.GetByIdAsync(userId);
+            var post = await _postRepository.GetByIdAsync(PostID);
+            if (user != null && post != null)
+            {
+                var comment = new Comment()
+                {
+                    Postid = PostID,
+                    Userid = userId,
+                    Parentid = parentId,
+                    Author = user.Nickname,
+                    Emailauthor = user.Email,
+                    Content = content,
+                    Device = device,
+                    Country = country,
+                    Region = region
+                    
+                };
 
-            var comment = new Comment() {
-                
-                Userid = userId,
-                Parentid = parentId,
-                Author = author,
-                Emailauthor = email,
-                Content = content,
-                Device = device,
-                Country = country,
-                Region = region,
-                Authorurl = authorUrl 
-            };
-        
-            
-            await _commentRepository.AddAsync(comment);
-            return new Responce<bool>() { data = true, succeeded = true };
 
-            
+                await _commentRepository.AddAsync(comment);
+                return new Responce<bool>() { data = true, succeeded = true };
+            }
+            return new Responce<bool>() { data = false, succeeded = true };
+        }
+        public async Task<Responce<bool>> CreateComment(long PostID, long? parentId, string author, string email, string content, string device, string country, string region, string authorUrl)
+        {
+            var post = await _postRepository.GetByIdAsync(PostID);
+            if (post != null)
+            {
+                var comment = new Comment()
+                {
+
+                    Postid = PostID,
+                    Parentid = parentId,
+                    Author = author,
+                    Emailauthor = email,
+                    Content = content,
+                    Device = device,
+                    Country = country,
+                    Region = region,
+                    Authorurl = authorUrl
+                };
+
+
+                await _commentRepository.AddAsync(comment);
+                return new Responce<bool>() { data = true, succeeded = true };
+            }
+            return new Responce<bool>() { data = false, succeeded = true };
         }
 
         public async Task<Responce<bool>> EditComment(long id, string content)
