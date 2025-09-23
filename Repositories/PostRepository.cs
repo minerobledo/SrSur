@@ -82,7 +82,7 @@ namespace SrSur.Repositories
             query = query.OrderByDescending(r => r.Createdate);
 
             // Paginación usando fecha
-            query.Skip((pageNumber - 1) * pageSize);
+            query = query.Skip((pageNumber - 1) * pageSize);
 
             // Limitar resultados
             query = query

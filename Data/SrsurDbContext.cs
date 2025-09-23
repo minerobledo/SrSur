@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SrSur.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace SrSur.Data;
 
@@ -33,6 +34,7 @@ public partial class SrsurDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<Sponsor> Sponsors { get; set; } = null!;
     public virtual DbSet<SponsorImage> SponsorsImages { get; set; } = null!;
+    public virtual DbSet<Resourse> Resourses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -354,6 +356,19 @@ public partial class SrsurDbContext : DbContext
                 .WithMany(p => p.SponsorImages) // esta colección la agregamos en Sponsor
                 .HasForeignKey(d => d.SponsorID)
                 .HasConstraintName("fk_sponsorimage_sponsor");
+        });
+
+        modelBuilder.Entity<Resourse>(entity => 
+        {
+            entity.Property(e => e.CloudflareId)
+                   .IsRequired();
+
+            entity.Property(e => e.Variants)
+                  .HasConversion(
+                      v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                      v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                  )
+                  .HasColumnType("jsonb"); // Para Postgres
         });
 
 
