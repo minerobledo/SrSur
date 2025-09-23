@@ -354,6 +354,37 @@ namespace SrSur.Migrations
                     b.ToTable("refreshtokens", (string)null);
                 });
 
+            modelBuilder.Entity("SrSur.Models.Entities.Resourse", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CloudflareId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Uploaded")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Variants")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Resourses");
+                });
+
             modelBuilder.Entity("SrSur.Models.Entities.Sponsor", b =>
                 {
                     b.Property<long>("Id")
