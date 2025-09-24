@@ -13,8 +13,8 @@ namespace SrSur.Controllers
         {
             this.servise = servise;
         }
-        [Authorize]
-        [HttpPost("AdminCreateEntry")]
+        
+        [HttpPost("CreateEntry")]
         public async Task<ActionResult> CreateEntry(CreatePostVisitedByGusetDto dto)
         {
             if (dto.IsComplete() == false) return BadRequest("Faltan Datos");
