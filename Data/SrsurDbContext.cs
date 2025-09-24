@@ -29,12 +29,16 @@ public partial class SrsurDbContext : DbContext
 
     public virtual DbSet<Refreshtoken> Refreshtokens { get; set; }
 
+    public virtual DbSet<Resourse> Resourses { get; set; }            
+    
+    public virtual DbSet<Sponsor> Sponsors { get; set; } = null!;
+
+    public virtual DbSet<SponsorImage> SponsorsImages { get; set; } = null!;
+
     public virtual DbSet<Tag> Tags { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
-    public virtual DbSet<Sponsor> Sponsors { get; set; } = null!;
-    public virtual DbSet<SponsorImage> SponsorsImages { get; set; } = null!;
-    public virtual DbSet<Resourse> Resourses { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
@@ -342,33 +346,50 @@ public partial class SrsurDbContext : DbContext
 
         modelBuilder.Entity<SponsorImage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("sponsorimage_pkey");
+            entity.HasKey(e => e.Id);
 
-            entity.ToTable("sponsorsimage");
-
-            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.SponsorID)
-                .HasColumnName("sponsorid");
-            entity.Property(e => e.Url)
-                .HasColumnName("url");
+                  .IsRequired();
 
-            entity.HasOne(d => d.Sponsor)
-                .WithMany(p => p.SponsorImages) // esta colección la agregamos en Sponsor
-                .HasForeignKey(d => d.SponsorID)
-                .HasConstraintName("fk_sponsorimage_sponsor");
-        });
-
-        modelBuilder.Entity<Resourse>(entity => 
-        {
             entity.Property(e => e.CloudflareId)
-                   .IsRequired();
+                  .IsRequired();
+
+            entity.Property(e => e.FileName)
+                  .IsRequired();
 
             entity.Property(e => e.Variants)
                   .HasConversion(
-                      v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
-                      v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null) ?? new List<string>()
+                      v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                      v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions?)null) ?? new List<string>()
                   )
-                  .HasColumnType("jsonb"); // Para Postgres
+                  .HasColumnType("jsonb");
+
+            // relación 1:N con Sponsor
+            entity.HasOne(d => d.Sponsor)
+                  .WithMany(p => p.SponsorImages)
+                  .HasForeignKey(d => d.SponsorID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Resourse>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.CloudflareId)
+                  .IsRequired();
+
+            entity.Property(e => e.FileName)
+                  .IsRequired();
+
+            entity.Property(e => e.Variants)
+                  .HasConversion(
+                      v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                      v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions?)null) ?? new List<string>()
+                  )
+                  .HasColumnType("jsonb"); // 👈 Postgres jsonb
+
+            entity.Property(e => e.Uploaded)
+                  .HasColumnType("timestamp with time zone"); // opcional, por consistencia
         });
 
 

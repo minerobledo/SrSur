@@ -12,10 +12,10 @@ namespace SrSur.Repositories
         public readonly DbSet<Resourse> _dbset;
         public readonly IMapper _mapper;
 
-        public ResourseRepocitory(SrsurDbContext context, DbSet<Resourse> dbset, IMapper mapper)
+        public ResourseRepocitory(SrsurDbContext context, IMapper mapper)
         {
             _context = context;
-            _dbset = dbset;
+            _dbset = context.Set<Resourse>();
             _mapper = mapper;
         }
 

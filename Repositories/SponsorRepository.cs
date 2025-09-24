@@ -13,7 +13,7 @@ namespace SrSur.Repositories
         public readonly DbSet<Sponsor> _dbset;
         public readonly IMapper _mapper;
 
-        public SponsorRepository(SrsurDbContext context, DbSet<Sponsor> dbset,IMapper mapper)
+        public SponsorRepository(SrsurDbContext context,IMapper mapper)
         {
             _context = context;
             _dbset = context.Set<Sponsor>();
