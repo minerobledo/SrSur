@@ -14,9 +14,9 @@ namespace SrSur.Services
             _guestRepository = guestRepository;
         }
 
-        public async Task<Responce<bool>> CreateGuset(string userAgent,string ipAdres, string referer, string country, string region)
+        public async Task<Responce<long>> CreateGuset(string userAgent,string ipAdres, string referer, string country, string region)
         {
-            var g= _guestRepository.GetByIPAsync(ipAdres);
+            var g= await _guestRepository.GetByIPAsync(ipAdres);
             if (g == null)
             {
                 var guest = new Guest()
@@ -29,9 +29,10 @@ namespace SrSur.Services
                     Region = region
                 };
                 await _guestRepository.AddAsync(guest);
-                return new Responce<bool>() { data = true, succeeded = true };
+                g = await _guestRepository.GetByIPAsync(ipAdres);
+                return new Responce<long>() { data = g.Id, succeeded = true };
             }
-            return new Responce<bool>() { data = false, succeeded = true, message = "ya existe esta ip" };
+            return new Responce<long>() { data = g.Id, succeeded = true, message = "ya existe esta ip" };
         }
        
 
