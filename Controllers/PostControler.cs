@@ -16,7 +16,7 @@ namespace SrSur.Controllers
         }
         [HttpPost("AdminCreatePost")]
         [Authorize]
-        public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
+        public async Task<ActionResult> CreatePost([FromForm] CreatePostDto d)
         {
             
             try
@@ -32,7 +32,7 @@ namespace SrSur.Controllers
         }
         [HttpPatch("AdminEditPost")]
         [Authorize]
-        public async Task<ActionResult> EditPost([FromBody] EditPostDto d)
+        public async Task<ActionResult> EditPost([FromForm] EditPostDto d)
         {
             try
             {

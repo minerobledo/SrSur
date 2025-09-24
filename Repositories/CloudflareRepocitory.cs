@@ -1,10 +1,11 @@
-﻿using SrSur.Services;
+﻿using SrSur.Interface;
+using SrSur.Services;
 using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace SrSur.Repositories
 {
-    public class CloudflareRepocitory
+    public class CloudflareRepocitory:ICloudflareRepocitory
     {
         private readonly string accountId = "TU_ACCOUNT_ID";
         private readonly string apiToken = "TU_API_TOKEN";

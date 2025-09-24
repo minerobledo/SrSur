@@ -7,6 +7,6 @@
         public string CloudflareId { get; set; } = null!; // id devuelto por Cloudflare
         public string FileName { get; set; } = null!;
         public List<string> Variants { get; set; } = new List<string>();
-        public virtual Sponsor Sponsor { get; set; }
+        public virtual Sponsor Sponsor { get; set; }    
     }
 }

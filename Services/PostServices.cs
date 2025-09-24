@@ -13,48 +13,58 @@ namespace SrSur.Services
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly ICloudflareRepocitory _cloudflareRepocitory;
 
-        public PostServices(IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository)
+        public PostServices(IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository, ICloudflareRepocitory cloudflareRepocitory)
         {
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
             _tagRepository = tagRepository;
+            _cloudflareRepocitory = cloudflareRepocitory;
         }
 
         public async Task<Responce<bool>> CreatePost(CreatePostDto d)
         {
-
-            var post = new Post()
+            var cloudresponse = await _cloudflareRepocitory.UploadImage(d.FormFile);
+            if (cloudresponse.Success )
             {
-                Authorid = d.AuthorId,
-                Title = d.Title,
-                Body = d.Body,
-                Commentstatus = d.CommentStatus,
-                Poststatus = d.PostStatus,
-                Excerpt = d.Excerpt,
-                Createdate = DateTime.UtcNow,
-                
-            };
-            if(d.CategoryId != null)
-            {
-                var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
-                if (cat != null) post.Categories.Add(cat);
-            }
-            if (d.TagsId != null)
-            {
-               
-                foreach(var t in d.TagsId)
+                var post = new Post()
                 {
-                   var temp = await _tagRepository.GetByIdAsync(t.Value);
-                   if (temp != null) post.Tags.Add(temp);
-                }           
+                    Authorid = d.AuthorId,
+                    Title = d.Title,
+                    Body = d.Body,
+                    Commentstatus = d.CommentStatus,
+                    Poststatus = d.PostStatus,
+                    Excerpt = d.Excerpt,
+                    Createdate = DateTime.UtcNow,
+                    CloudflareId = cloudresponse.Result.Id,
+                    FileName =cloudresponse.Result.Filename,
+                    Variants = cloudresponse.Result.Variants,
+                
+                };
+                if(d.CategoryId != null)
+                {
+                    var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
+                    if (cat != null) post.Categories.Add(cat);
+                }
+                if (d.TagsId != null)
+                {
+               
+                    foreach(var t in d.TagsId)
+                    {
+                       var temp = await _tagRepository.GetByIdAsync(t.Value);
+                       if (temp != null) post.Tags.Add(temp);
+                    }           
+                }
+                await _postRepository.AddAsync(post);
+                return new Responce<bool>() { data = true, succeeded = true };
             }
+            return new Responce<bool>() { data= false, succeeded = true ,message= "cloudflare no responde"};
 
-            await _postRepository.AddAsync(post);
-            return new Responce<bool>() { data = true, succeeded = true };
 
 
         }
+
 
         public async Task<Responce<bool>> EditPost(EditPostDto d)
         {
@@ -81,7 +91,29 @@ namespace SrSur.Services
                         if (temp != null) post.Tags.Add(temp);
                     }
                 }
+                if(d.FormFile != null)
+                {
+                    var deleteresponce = await _cloudflareRepocitory.DeleteImageAsync(post.CloudflareId);
+                    if (deleteresponce)
+                    {
+                        var cloudresponse = await _cloudflareRepocitory.UploadImage(d.FormFile);
+                        if (cloudresponse.Success)
+                        {
+                            post.CloudflareId = cloudresponse.Result.Id;
+                            post.FileName = cloudresponse.Result.Filename;
+                            post.Variants = cloudresponse.Result.Variants;
+                        }
+                        else
+                        {
+                            return new Responce<bool>() { data = true, succeeded = true, message = "error en cargar la nueva imagen de cloudfler" };
+                        }
+                    }
+                    else 
+                    {
+                        return new Responce<bool>() { data = true, succeeded = true,message ="error en borrar la primera imagen de cloudfler"};
+                    }
 
+                }
 
                 await _postRepository.UpdateAsync(post);
 

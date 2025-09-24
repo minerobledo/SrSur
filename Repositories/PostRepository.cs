@@ -47,6 +47,8 @@ namespace SrSur.Repositories
         }
         public async Task<List<Post>> SerchByFilterAsync(Dictionary<string, object> filters,int pageNumber, int pageSize)
         {
+            pageNumber = Math.Max(pageNumber, 1);
+            pageSize = Math.Max(pageSize, 1);
             IQueryable<Post> query = _context.Posts;
 
             foreach (var filtro in filters)

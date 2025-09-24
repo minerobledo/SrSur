@@ -10,14 +10,18 @@
 
         public string? CommentStatus { get; set; }
 
-        
 
-        public string? PostStatus { get; set; } 
+
+        public string? PostStatus { get; set; }
 
         public string? Excerpt { get; set; }
 
         public long? CategoryId { get; set; }
 
         public List<long?>? TagsId { get; set; }
+
+        public IFormFile? FormFile { get; set; }
+
+
     }
 }

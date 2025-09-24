@@ -35,6 +35,10 @@ public partial class Post
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
     public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
+    public string CloudflareId { get; set; } = null!; // id devuelto por Cloudflare
+    public string FileName { get; set; } = null!;
+    // Variants lo vamos a mapear a JSONB en PostgreSQL
+    public List<string> Variants { get; set; } = new List<string>();
 
-    
+
 }

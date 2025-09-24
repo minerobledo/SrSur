@@ -56,11 +56,15 @@ namespace SrSur
 
             AutomaterConfig(services);
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICloudflareRepocitory, CloudflareRepocitory>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IGuestRepository, GuestRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<IPostsVisitedByGuestRepository, PostVisitedByGusetRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IResourseRepocitory, ResourseRepocitory>();
+            services.AddScoped<ISponcorRepository, SponsorRepository>();
+            services.AddScoped<ISponsorImageRepocitory, SponsorImageRepocitory>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IUserRepository,UserRepository>();
 
@@ -70,6 +74,9 @@ namespace SrSur
             services.AddScoped<JWTService>();
             services.AddScoped<PostServices>();
             services.AddScoped<PostsVisitedByGuestServise>();
+            services.AddScoped<ResourseServices>();
+            services.AddScoped<SponsorImagService>();
+            services.AddScoped<SponsorService>();
             services.AddScoped<TagSeervice>();
             services.AddScoped<UserService>();
         }
