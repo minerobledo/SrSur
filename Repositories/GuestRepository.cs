@@ -46,6 +46,11 @@ namespace SrSur.Repositories
             return await _context.Guests
                .FirstOrDefaultAsync(t => t.Id == id);
         }
+        public async Task<Guest?> GetByIPAsync(string ip)
+        {
+            return await _context.Guests
+               .FirstOrDefaultAsync(t => t.Ipaddress == ip);
+        }
     }
 
 }

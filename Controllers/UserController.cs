@@ -30,18 +30,51 @@ namespace SrSur.Controllers
 
 
         [HttpPost("Login")]
-        public async Task<ActionResult> Login([FromBody]LoginDto dto)
+        public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
-            if (dto.IsComplete()== false) return BadRequest("Faltan Datos");
+            if (dto.IsComplete() == false) return BadRequest("Faltan Datos");
             try
             {
                 var responceDTO = await _userService.Login(dto.Email, dto.Password);
                 return Ok(responceDTO);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
-            
+
+        }
+        [Authorize]
+        [HttpPost("Logout/{token}")]
+        public async Task<ActionResult> Logout([FromRoute] string token)
+        {
+
+            try
+            {
+                var responceDTO = await _userService.Logout(token);
+                return Ok(responceDTO);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
+        }
+        [Authorize]
+        [HttpPost("Refresh/{token}")]
+        public async Task<ActionResult> Refresh([FromRoute] string token)
+        {
+
+            try
+            {
+                var responceDTO = await _userService.Refresh(token);
+                return Ok(responceDTO);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+
         }
     }
 }

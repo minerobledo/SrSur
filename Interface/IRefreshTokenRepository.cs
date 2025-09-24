@@ -4,11 +4,12 @@ namespace SrSur.Interface
 {
     public interface IRefreshTokenRepository
     {
-        Task AddAsync(Tag tag);
-        Task UpdateAsync(Tag tag);
-        Task DeleteAsync(long id);
-        Task<List<Tag>?> GetAllAsync();
-        Task<Tag?> GetByIdAsync(long id);
-        Task<Tag?> GetByNameAsync(string name);
+        Task AddAsync(Refreshtoken token);
+        Task DeletaAsync(long id);
+        Task<List<Refreshtoken>?> GetAllAsync();
+        Task<Refreshtoken?> GetByIdAsync(long id);
+        Task<Refreshtoken?> GetByRefreshTokenAsync(string token);
+        Task<Refreshtoken?> GetByUserIdAsync(long id);
+        Task UpdateAsync(Refreshtoken token);
     }
 }

@@ -9,21 +9,21 @@ namespace SrSur.Repositories
     public class RefreshTokenRepository : IRefreshTokenRepository
     {
         private readonly SrsurDbContext _context;
-        public readonly DbSet<Tag> _dbset;
+        public readonly DbSet<Refreshtoken> _dbset;
 
         public RefreshTokenRepository(SrsurDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddAsync(Tag tag)
+        public async Task AddAsync(Refreshtoken token)
         {
 
-            await _context.Tags.AddAsync(tag);
+            await _context.Refreshtokens.AddAsync(token);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(long id)
+        public async Task DeletaAsync(long id)
         {
             var entity = await _dbset.FindAsync(id);
             if (entity == null) return;
@@ -33,28 +33,33 @@ namespace SrSur.Repositories
         }
 
 
-        public async Task<List<Tag>?> GetAllAsync()
+        public async Task<List<Refreshtoken>?> GetAllAsync()
         {
             return await _dbset.ToListAsync();
         }
 
-        public async Task<Tag?> GetByIdAsync(long id)
+        public async Task<Refreshtoken?> GetByIdAsync(long id)
         {
-            return await _context.Tags
+            return await _context.Refreshtokens
               .Include(u => u.Id) // Traemos los refresh tokens relacionados
               .FirstOrDefaultAsync(u => u.Id == id);
         }
-
-        public async Task<Tag?> GetByNameAsync(string name)
+        public async Task<Refreshtoken?> GetByRefreshTokenAsync(string token)
         {
-            return await _context.Tags
-              .Include(u => u.Tagname) // Traemos los refresh tokens relacionados
-              .FirstOrDefaultAsync(u => u.Tagname == name);
+            return await _context.Refreshtokens
+              .Include(u => u.Id) // Traemos los refresh tokens relacionados
+              .FirstOrDefaultAsync(u => u.Token == token);
+        }
+        public async Task<Refreshtoken?> GetByUserIdAsync(long id)
+        {
+            return await _context.Refreshtokens
+              .Include(u => u.Userid) // Traemos los refresh tokens relacionados
+              .FirstOrDefaultAsync(u => u.Userid == id);
         }
 
-        public async Task UpdateAsync(Tag tag)
+        public async Task UpdateAsync(Refreshtoken token)
         {
-            _context.Tags.Update(tag);
+            _context.Refreshtokens.Update(token);
             await _context.SaveChangesAsync();
         }
     }

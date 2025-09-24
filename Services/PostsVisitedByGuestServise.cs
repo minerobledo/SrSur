@@ -17,7 +17,8 @@ namespace SrSur.Services
         }
 
         public async Task<Responce<bool>> Create(long Postid, long Guestid,int Visitetime)
-        {
+        { 
+            
             var item = new Postsvisitedbyguest
             {
                 Postid = Postid,

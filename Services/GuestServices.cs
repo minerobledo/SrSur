@@ -16,18 +16,22 @@ namespace SrSur.Services
 
         public async Task<Responce<bool>> CreateGuset(string userAgent,string ipAdres, string referer, string country, string region)
         {
-            Console.WriteLine("el ipadres es:"+ipAdres);
-            var guest = new Guest()
+            var g= _guestRepository.GetByIPAsync(ipAdres);
+            if (g == null)
             {
-                Useragent = userAgent,
-                Ipaddress = ipAdres,
-                Referrer = referer,
-                
-                Country = country,
-                Region = region
-            };
-            await _guestRepository.AddAsync(guest);
-            return new Responce<bool>() { data = true, succeeded = true };
+                var guest = new Guest()
+                {
+                    Useragent = userAgent,
+                    Ipaddress = ipAdres,
+                    Referrer = referer,
+
+                    Country = country,
+                    Region = region
+                };
+                await _guestRepository.AddAsync(guest);
+                return new Responce<bool>() { data = true, succeeded = true };
+            }
+            return new Responce<bool>() { data = false, succeeded = true, message = "ya existe esta ip" };
         }
        
 

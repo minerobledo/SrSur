@@ -9,7 +9,7 @@ namespace SrSur.Interface
         Task DeleteAsync(long id);
         Task<List<Guest>?> GetAllAsync();
         Task<Guest?> GetByIdAsync(long id);
-
+        Task<Guest?> GetByIPAsync(string ip);
 
     }
 }
