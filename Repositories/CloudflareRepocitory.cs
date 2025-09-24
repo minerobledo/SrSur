@@ -7,11 +7,16 @@ namespace SrSur.Repositories
 {
     public class CloudflareRepocitory:ICloudflareRepocitory
     {
-        private readonly string accountId = "TU_ACCOUNT_ID";
+        private readonly string accountId;
         private readonly string apiToken = "TU_API_TOKEN";
         private readonly HttpClient httpClient = new HttpClient();
 
-       
+        public CloudflareRepocitory()
+        {
+            accountId = Environment.GetEnvironmentVariable("CLOUDFLARE_ACCOUNT_ID");
+            apiToken = Environment.GetEnvironmentVariable("CLOUDFLARE_API_TOKEN");
+        }
+
         public async Task<CloudflareUploadResponse?> UploadImage(IFormFile file)
         {
             using var form = new MultipartFormDataContent();
