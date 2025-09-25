@@ -20,7 +20,7 @@ namespace SrSur.Services
             _cloudflareRepocitory = cloudflareRepocitory;
         }
 
-        public async Task<Responce<bool>> CreateResourse(CreateResourseDto dto)
+        public async Task<Responce<Resourse>> CreateResourse(CreateResourseDto dto)
         {
             var res = await _cloudflareRepocitory.UploadImage(dto.FormFile);
             var image = res.Result;
@@ -36,10 +36,10 @@ namespace SrSur.Services
                 };
 
                 await _resourse.CreateResorse(resourse);
-                return new Responce<bool> { data= true, succeeded= true};
+                return new Responce<Resourse> { data= resourse, succeeded= true};
 
             }
-            return new Responce<bool> { data = false, succeeded = true };
+            return new Responce<Resourse> { data = null, succeeded = true };
         }
 
         public async Task<bool> DeleteResorse(long Id)
