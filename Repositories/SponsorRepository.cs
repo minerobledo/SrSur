@@ -45,7 +45,12 @@ namespace SrSur.Repositories
         {
             return await _context.Sponsors.FirstOrDefaultAsync(s => s.Id == id);
         }
-
+        public async Task<Sponsor?> GetSponsorByname(string name)
+        {
+            IQueryable<Sponsor> query = _context.Sponsors;
+            query = query.Where(s => s.Name == name);
+            return await query.FirstOrDefaultAsync();
+        }
         public async Task UpdateSponsor(Sponsor dto)
         {
             _dbset.Update(dto);

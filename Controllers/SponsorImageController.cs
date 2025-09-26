@@ -82,8 +82,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [Authorize]
-        [HttpGet("GetRandomSponsorImage/{page}")]
+        
+        [HttpGet("GetRandomSponsorImage/{count}")]
         public async Task<IActionResult> GetRandomSponsorImage([FromRoute] int count)
         {
             try

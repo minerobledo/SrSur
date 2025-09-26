@@ -11,6 +11,7 @@ namespace SrSur.Controllers
     public class SponsorController: ControllerBase
     {
         private readonly SponsorService _sponcorServices;
+        
 
         public SponsorController(SponsorService sponcorRepository)
         {

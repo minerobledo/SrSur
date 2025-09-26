@@ -5,7 +5,7 @@
         
         public string Name { get; set; }
         public double Amount { get; set; }   // o decimal si es dinero
-      
+        public IFormFile FormFile { get; set; }
         public bool Paid { get; set; }
     }
     public class UpdateSponsorDto

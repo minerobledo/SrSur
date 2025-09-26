@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using SrSur.Interface;
 using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Sponsor;
@@ -9,19 +10,37 @@ namespace SrSur.Services
 {
     public class SponsorService
     {
+        private readonly ICloudflareRepocitory _cloudflareRepocitory;
+        private readonly ISponsorImageRepocitory _sponsorImageRepocitory;
         private readonly ISponcorRepository _sponcorRepository;
         private readonly IMapper _mapper;
 
-        public SponsorService(ISponcorRepository sponcorRepository, IMapper mapper)
+        public SponsorService(ISponsorImageRepocitory sponsorImageRepocitory, ISponcorRepository sponcorRepository, IMapper mapper)
         {
+            _sponsorImageRepocitory = sponsorImageRepocitory;
             _sponcorRepository = sponcorRepository;
             _mapper = mapper;
         }
 
         public async Task<Responce<bool>> CreateSponsor(CreateSponsorDto dto)
         {
-            await _sponcorRepository.CreateSponsor(_mapper.Map<Sponsor>(dto));
-            return new Responce<bool> { data = true,succeeded = true };
+            var r = await _cloudflareRepocitory.UploadImage(dto.FormFile);
+            if(r.Success == true)
+            { 
+                await _sponcorRepository.CreateSponsor(_mapper.Map<Sponsor>(dto));
+                var sponsor = _sponcorRepository.GetSponsorByname(dto.Name);
+                var result = r.Result;
+
+                await _sponsorImageRepocitory.CreateAsync(new SponsorImage
+                {
+                    CloudflareId = result.Id,
+                    FileName = result.Filename,
+                    Variants = result.Variants,
+                    SponsorID = sponsor.Id,
+                });
+                return new Responce<bool> { data = true,succeeded = true };
+            }
+            return new Responce<bool> {data = false,succeeded = false,message= "Claudflare no responde "};
         }
         public async Task<Responce<bool>> UpdateSponsor(UpdateSponsorDto dto)
         {

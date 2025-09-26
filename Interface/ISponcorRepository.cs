@@ -9,6 +9,7 @@ namespace SrSur.Interface
         Task UpdateSponsor(Sponsor dto);
         Task<bool> DeleteSponsor( long id );
         Task<List<Sponsor>> GetSponsors();
+        Task<Sponsor?> GetSponsorByname(string name);
         Task<Sponsor?> GetSponsorById(long id);
     }
 }
