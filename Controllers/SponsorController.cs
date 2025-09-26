@@ -20,7 +20,7 @@ namespace SrSur.Controllers
 
         [Authorize]
         [HttpPost("CreateSponsor")]
-        public async Task<IActionResult> CreateSponsor([FromBody] CreateSponsorDto dto)
+        public async Task<IActionResult> CreateSponsor([FromForm] CreateSponsorDto dto)
         {            
             try
             {
