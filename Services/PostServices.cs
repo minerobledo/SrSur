@@ -45,10 +45,10 @@ namespace SrSur.Services
             }
             if (d.TagsId != null)
             {
-               
-                foreach(var t in d.TagsId)
+                var list = System.Text.Json.JsonSerializer.Deserialize<List<long>>(d.TagsId);
+                foreach (var t in list)
                 {
-                    var temp = await _tagRepository.GetByIdAsync(t.Value);
+                    var temp = await _tagRepository.GetByIdAsync(t);
                     if (temp != null) post.Tags.Add(temp);
                 }           
             }

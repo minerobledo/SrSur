@@ -16,7 +16,7 @@
 
         public long? CategoryId { get; set; }
       
-        public List<long?>? TagsId { get; set; }
+        public string? TagsId { get; set; }
     }
     
 }
