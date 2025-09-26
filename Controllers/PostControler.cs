@@ -16,7 +16,7 @@ namespace SrSur.Controllers
         }
         [HttpPost("AdminCreatePost")]
         [Authorize]
-        public async Task<ActionResult> CreatePost([FromForm] CreatePostDto d)
+        public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
         {
             
             try
@@ -32,11 +32,25 @@ namespace SrSur.Controllers
         }
         [HttpPatch("AdminEditPost")]
         [Authorize]
-        public async Task<ActionResult> EditPost([FromForm] EditPostDto d)
+        public async Task<ActionResult> EditPost([FromBody] EditPostDto d)
         {
             try
             {
                 var responce = await _postServices.EditPost(d);
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+        [HttpPatch("AdminEditImagePost")]
+        [Authorize]
+        public async Task<ActionResult> EditImagePost([FromForm] EditImagePostDto d)
+        {
+            try
+            {
+                var responce = await _postServices.EditImagePost(d);
                 return Ok(responce);
             }
             catch (Exception ex)

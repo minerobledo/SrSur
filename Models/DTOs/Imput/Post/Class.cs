@@ -20,6 +20,15 @@
 
         public List<long?>? TagsId { get; set; }
 
+       
+
+
+    }
+    public class EditImagePostDto : DTOGeneric
+    {
+        public long Id { get; set; }
+
+
         public IFormFile? FormFile { get; set; }
 
 
