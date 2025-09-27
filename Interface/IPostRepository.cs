@@ -10,6 +10,6 @@ namespace SrSur.Interface
         Task<List<Post>?> GetAllAsync();
         Task<List<Post>> SerchByFilterAsync(Dictionary<string, object> filters, int pageNumber, int pageSize);
         Task<Post?> GetByIdAsync(long id);
-        
+        Task<List<Post?>> SearchPostWithNeighbors(Dictionary<string, object> filters);
     }
 }

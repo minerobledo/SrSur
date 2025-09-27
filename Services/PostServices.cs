@@ -1,4 +1,5 @@
 ﻿
+using AutoMapper.Configuration.Annotations;
 using SrSur.Interface;
 using SrSur.Models.DTOs;
 using SrSur.Models.DTOs.Imput.Post;
@@ -61,6 +62,11 @@ namespace SrSur.Services
 
         }
 
+        public async Task<Responce<List<Post?>>> GetPostWithNeighbors(Dictionary<string,object> filtres)
+        {
+            var r = await _postRepository.SearchPostWithNeighbors(filtres);
+            return new Responce<List<Post?>>() { data = r, succeeded = true };
+        }
 
         public async Task<Responce<bool>> EditPost(EditPostDto d)
         {

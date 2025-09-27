@@ -18,7 +18,7 @@ namespace SrSur.Controllers
         [Authorize]
         public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
         {
-            
+
             try
             {
                 var responce = await _postServices.CreatePost(d);
@@ -78,7 +78,7 @@ namespace SrSur.Controllers
         {
             try
             {
-                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page,true);
+                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page, true);
                 return Ok(responce);
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace SrSur.Controllers
         {
             try
             {
-                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page,false);
+                var responce = await _postServices.GetPostFiltered(dto.Filtros, dto.Page, false);
                 return Ok(responce);
             }
             catch (Exception ex)
@@ -100,5 +100,18 @@ namespace SrSur.Controllers
             }
         }
 
+        [HttpPost("GetPostWithNeighbors")]
+        public async Task<ActionResult> GetPostWithNeighbors([FromBody] Dictionary<string,object> dto)
+        {
+            try
+            {
+                var responce = await _postServices.GetPostWithNeighbors(dto);
+                return Ok(responce);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
     }
 }
