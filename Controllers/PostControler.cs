@@ -26,7 +26,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -41,6 +45,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -55,6 +64,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -69,6 +83,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -83,6 +102,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -96,6 +120,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
@@ -110,6 +139,11 @@ namespace SrSur.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error capturado:");
+                Console.WriteLine($"Mensaje: {ex.Message}");
+                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
+                Console.WriteLine("StackTrace:");
+                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
