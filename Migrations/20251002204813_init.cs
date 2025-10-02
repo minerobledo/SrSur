@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -7,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SrSur.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialSponsor : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +52,23 @@ namespace SrSur.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("guest_pkey", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resourses",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    CloudflareId = table.Column<string>(type: "text", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: false),
+                    Variants = table.Column<string>(type: "jsonb", nullable: false),
+                    Uploaded = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resourses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,20 +121,22 @@ namespace SrSur.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "sponsorsimage",
+                name: "SponsorsImages",
                 columns: table => new
                 {
-                    id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    sponsorid = table.Column<long>(type: "bigint", nullable: false),
-                    url = table.Column<string>(type: "text", nullable: true)
+                    SponsorID = table.Column<long>(type: "bigint", nullable: false),
+                    CloudflareId = table.Column<string>(type: "text", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: false),
+                    Variants = table.Column<string>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("sponsorimage_pkey", x => x.id);
+                    table.PrimaryKey("PK_SponsorsImages", x => x.Id);
                     table.ForeignKey(
-                        name: "fk_sponsorimage_sponsor",
-                        column: x => x.sponsorid,
+                        name: "FK_SponsorsImages_sponsors_SponsorID",
+                        column: x => x.SponsorID,
                         principalTable: "sponsors",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -136,7 +156,10 @@ namespace SrSur.Migrations
                     publishdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     lasteditdate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     poststatus = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    excerpt = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true)
+                    excerpt = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    CloudflareId = table.Column<string>(type: "text", nullable: false),
+                    FileName = table.Column<string>(type: "text", nullable: false),
+                    Variants = table.Column<List<string>>(type: "text[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -168,7 +191,8 @@ namespace SrSur.Migrations
                         name: "refreshtokens_userid_fkey",
                         column: x => x.userid,
                         principalTable: "users",
-                        principalColumn: "id");
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -323,9 +347,9 @@ namespace SrSur.Migrations
                 column: "userid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_sponsorsimage_sponsorid",
-                table: "sponsorsimage",
-                column: "sponsorid");
+                name: "IX_SponsorsImages_SponsorID",
+                table: "SponsorsImages",
+                column: "SponsorID");
 
             migrationBuilder.CreateIndex(
                 name: "users_email_key",
@@ -353,7 +377,10 @@ namespace SrSur.Migrations
                 name: "refreshtokens");
 
             migrationBuilder.DropTable(
-                name: "sponsorsimage");
+                name: "Resourses");
+
+            migrationBuilder.DropTable(
+                name: "SponsorsImages");
 
             migrationBuilder.DropTable(
                 name: "categories");

@@ -639,6 +639,7 @@ namespace SrSur.Migrations
                     b.HasOne("SrSur.Models.Entities.User", "User")
                         .WithMany("Refreshtokens")
                         .HasForeignKey("Userid")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("refreshtokens_userid_fkey");
 
