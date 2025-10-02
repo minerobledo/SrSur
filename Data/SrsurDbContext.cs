@@ -275,7 +275,7 @@ public partial class SrsurDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Refreshtokens)
                 .HasForeignKey(d => d.Userid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("refreshtokens_userid_fkey");
         });
 
