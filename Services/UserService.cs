@@ -39,10 +39,14 @@ namespace SrSur.Services
         {
             var usuario = await _userRepository.GetByEmailAsync(email);
 
-            if (usuario == null) throw new Exception("Usuario no encontrado");
+            if (usuario == null) return new Responce<LoginResponceDTO?> { data = null, succeeded = false , message = "Usuario no encontrado" };
 
             bool passwordValido = BCrypt.Net.BCrypt.Verify(password, usuario.Password);
-            if (!passwordValido) throw new Exception("Contraseña incorrecta");
+            if (!passwordValido)
+            {
+                return new Responce<LoginResponceDTO?> { data = null, succeeded = false, message = "Contraseña incorrecta" };
+            }
+
 
             // Generar JWT y un nuevo RefreshToken cada login
             var jwt = _jwtService.GenerateToken(email);
