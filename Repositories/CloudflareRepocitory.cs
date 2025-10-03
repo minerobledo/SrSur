@@ -31,16 +31,16 @@ namespace SrSur.Repositories
             var response = await httpClient.PostAsync(
                 $"https://api.cloudflare.com/client/v4/accounts/{accountId}/images/v1", form);
 
-            var content = await response.Content.ReadAsStringAsync();
+            var content = JsonSerializer.Deserialize<CloudflareUploadResponse>(await response.Content.ReadAsStringAsync());
 
-            Console.WriteLine(content.ToString());
+           
 
-            if (!response.IsSuccessStatusCode)
+            if (content.Success != true)
             {
                 throw new Exception($"Error subiendo la imagen: {content}");
             }
 
-            return JsonSerializer.Deserialize<CloudflareUploadResponse>(content);
+            return content;
         }
         public async Task<bool> DeleteImageAsync(string cloudflareId)
         {
