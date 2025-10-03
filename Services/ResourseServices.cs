@@ -39,7 +39,7 @@ namespace SrSur.Services
                 return new Responce<Resourse> { data= resourse, succeeded= true};
 
             }
-            return new Responce<Resourse> { data = null, succeeded = true };
+            return new Responce<Resourse> { data = null, succeeded = true , message ="No hay respuesta del servidor de imagenes:"+res.Messages};
         }
 
         public async Task<bool> DeleteResorse(long Id)
