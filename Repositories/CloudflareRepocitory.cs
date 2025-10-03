@@ -31,6 +31,7 @@ namespace SrSur.Repositories
             var response = await httpClient.PostAsync(
                 $"https://api.cloudflare.com/client/v4/accounts/{accountId}/images/v1", form);
 
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
             var content = JsonSerializer.Deserialize<CloudflareUploadResponse>(await response.Content.ReadAsStringAsync());
 
            
