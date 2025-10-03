@@ -32,9 +32,9 @@ namespace SrSur.Repositories
                 $"https://api.cloudflare.com/client/v4/accounts/{accountId}/images/v1", form);
 
             Console.WriteLine(await response.Content.ReadAsStringAsync());
-            var content = JsonSerializer.Deserialize<CloudflareUploadResponse>(await response.Content.ReadAsStringAsync());
+            var content = JsonSerializer.Deserialize<CloudflareUploadResponse>(await response.Content.ReadAsStringAsync(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            Console.WriteLine(content);
 
-           
 
             if (content.Success != true)
             {
