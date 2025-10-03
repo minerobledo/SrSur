@@ -11,13 +11,15 @@ namespace SrSur.Services
 {
     public class PostServices
     {
+        private readonly IResourseRepocitory _resourseRepocitory;
         private readonly IPostRepository _postRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ITagRepository _tagRepository;
         private readonly ICloudflareRepocitory _cloudflareRepocitory;
 
-        public PostServices(IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository, ICloudflareRepocitory cloudflareRepocitory)
+        public PostServices(IResourseRepocitory resourseRepocitory, IPostRepository postRepository, ICategoryRepository categoryRepository, ITagRepository tagRepository, ICloudflareRepocitory cloudflareRepocitory)
         {
+            _resourseRepocitory = resourseRepocitory;
             _postRepository = postRepository;
             _categoryRepository = categoryRepository;
             _tagRepository = tagRepository;
@@ -26,36 +28,44 @@ namespace SrSur.Services
 
         public async Task<Responce<bool>> CreatePost(CreatePostDto d)
         {
-            
-            var post = new Post()
+            var res = await _cloudflareRepocitory.UploadImage(d.FormFile);
+            var image = res.Result;
+            if (res.Success == true)
             {
-                Authorid = d.AuthorId,
-                Title = d.Title,
-                Body = d.Body,
-                Commentstatus = d.CommentStatus,
-                Poststatus = d.PostStatus,
-                Excerpt = d.Excerpt,
-                Createdate = DateTime.UtcNow
-                    
-                
-            };
-            if(d.CategoryId != null)
-            {
-                var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
-                if (cat != null) post.Categories.Add(cat);
-            }
-            if (d.TagsId != null)
-            {
-                var list = System.Text.Json.JsonSerializer.Deserialize<List<long>>(d.TagsId);
-                foreach (var t in list)
+                var post = new Post()
                 {
-                    var temp = await _tagRepository.GetByIdAsync(t);
-                    if (temp != null) post.Tags.Add(temp);
-                }           
+                    Authorid = d.AuthorId,
+                    Title = d.Title,
+                    Body = d.Body,
+                    Commentstatus = d.CommentStatus,
+                    Poststatus = d.PostStatus,
+                    Excerpt = d.Excerpt,
+                    Createdate = DateTime.UtcNow,
+                    CloudflareId = image.Id,
+                    FileName = image.Filename,
+                    Variants = image.Variants
+
+
+                };
+                if(d.CategoryId != null)
+                {
+                    var cat = await _categoryRepository.GetByIdAsync(d.CategoryId.Value);
+                    if (cat != null) post.Categories.Add(cat);
+                }
+                if (d.TagsId != null)
+                {
+                    
+                    foreach (var t in d.TagsId)
+                    {
+                        var temp = await _tagRepository.GetByIdAsync(t);
+                        if (temp != null) post.Tags.Add(temp);
+                    }           
+                }
+                await _postRepository.AddAsync(post);
+                return new Responce<bool>() { data = true, succeeded = true };
+                
             }
-            await _postRepository.AddAsync(post);
-            return new Responce<bool>() { data = true, succeeded = true };
-            
+            throw new Exception("Error en servidor de imagenes: " + res.Errors);
            
 
 

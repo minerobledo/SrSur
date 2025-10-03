@@ -16,7 +16,7 @@ namespace SrSur.Controllers
         }
         [HttpPost("AdminCreatePost")]
         [Authorize]
-        public async Task<ActionResult> CreatePost([FromBody] CreatePostDto d)
+        public async Task<ActionResult> CreatePost([FromForm] CreatePostDto d)
         {
 
             try

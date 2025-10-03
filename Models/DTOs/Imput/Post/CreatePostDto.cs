@@ -14,9 +14,14 @@
 
         public string? Excerpt { get; set; }
 
+
+
+
         public long? CategoryId { get; set; }
       
-        public string? TagsId { get; set; }
+        public List<long>? TagsId { get; set; }
+
+        public IFormFile FormFile { get; set; }
     }
     
 }
