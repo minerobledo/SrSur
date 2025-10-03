@@ -33,6 +33,8 @@ namespace SrSur.Repositories
 
             var content = await response.Content.ReadAsStringAsync();
 
+            Console.WriteLine(content.ToString());
+
             if (!response.IsSuccessStatusCode)
             {
                 throw new Exception($"Error subiendo la imagen: {content}");
