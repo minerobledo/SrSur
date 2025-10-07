@@ -20,7 +20,7 @@
 
         public List<long?>? TagsId { get; set; }
 
-       
+       public IFormFile? FormFile { get; set; }
 
 
     }

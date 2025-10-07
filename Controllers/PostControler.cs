@@ -18,7 +18,8 @@ namespace SrSur.Controllers
         [Authorize]
         public async Task<ActionResult> CreatePost([FromForm] CreatePostDto d)
         {
-
+            if (d.FormFile == null)
+                return BadRequest("No se recibió ningún archivo.");
             try
             {
                 var responce = await _postServices.CreatePost(d);
@@ -53,25 +54,8 @@ namespace SrSur.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        [HttpPatch("AdminEditImagePost")]
-        [Authorize]
-        public async Task<ActionResult> EditImagePost([FromForm] EditImagePostDto d)
-        {
-            try
-            {
-                var responce = await _postServices.EditImagePost(d);
-                return Ok(responce);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error capturado:");
-                Console.WriteLine($"Mensaje: {ex.Message}");
-                Console.WriteLine($"Tipo: {ex.GetType().FullName}");
-                Console.WriteLine("StackTrace:");
-                Console.WriteLine(ex.StackTrace); // Acá vas a ver la línea
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+        
+
         [HttpDelete("AdminDeletePost{id}")]
         [Authorize]
         public async Task<ActionResult> DeletePost([FromRoute] long id)

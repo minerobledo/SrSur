@@ -103,49 +103,24 @@ namespace SrSur.Services
                         if (temp != null) post.Tags.Add(temp);
                     }
                 }
-                
-
-                await _postRepository.UpdateAsync(post);
-
-                return new Responce<bool>() { data = true, succeeded = true };
-            }
-            else
-            {
-                return new Responce<bool>() { data = true, succeeded = true, message = "no existe un tag con ese id" };
-            }
-        }
-        public async Task<Responce<bool>> EditImagePost(EditImagePostDto d)
-        {
-
-            var post = await _postRepository.GetByIdAsync(d.Id);
-            if (post != null)
-            {
-              
-                if (d.FormFile != null)
+                if(d.FormFile == null)
                 {
-                    var deleteresponce = await _cloudflareRepocitory.DeleteImageAsync(post.CloudflareId);
-                    if (deleteresponce)
+                    var res = await _cloudflareRepocitory.UploadImage(d.FormFile);
+                    var image = res.Result;
+                    if (res.Success == true)
                     {
-                        var cloudresponse = await _cloudflareRepocitory.UploadImage(d.FormFile);
-                        if (cloudresponse.Success)
-                        {
-                            post.CloudflareId = cloudresponse.Result.Id;
-                            post.FileName = cloudresponse.Result.Filename;
-                            post.Variants = cloudresponse.Result.Variants;
-                        }
-                        else
-                        {
-                            return new Responce<bool>() { data = true, succeeded = true, message = "error en cargar la nueva imagen de cloudfler" };
-                        }
+                        post.CloudflareId = image.Id;
+                        post.Variants = image.Variants;
+                        post.FileName = image.Filename;
                     }
                     else
                     {
-                        return new Responce<bool>() { data = true, succeeded = true, message = "error en borrar la primera imagen de cloudfler" };
-                    }
+                        throw new Exception("Error en servidor de imagenes: " + res.Errors);
 
+                    }
                 }
 
-                await _postRepository.UpdateAsync(post);
+                    await _postRepository.UpdateAsync(post);
 
                 return new Responce<bool>() { data = true, succeeded = true };
             }
@@ -154,6 +129,7 @@ namespace SrSur.Services
                 return new Responce<bool>() { data = true, succeeded = true, message = "no existe un tag con ese id" };
             }
         }
+       
 
         public async Task<Responce<bool>> DeletePost(long id)
         {
