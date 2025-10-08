@@ -113,7 +113,10 @@ namespace SrSur.Repositories
                     Postsvisitedbyguests = p.Postsvisitedbyguests.Select(p => new Postsvisitedbyguest
                     {
                         Guestid = p.Guestid,
-                    }).ToList()
+                    }).ToList(),
+                    CloudflareId= p.CloudflareId,
+                    FileName= p.FileName,
+                    Variants = p.Variants,
                 });
 
             return await query.ToListAsync(); 
