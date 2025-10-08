@@ -93,6 +93,7 @@ namespace SrSur.Repositories
                 .Select(p => new Post
                 {
                     Id = p.Id,
+                    Authorid = p.Authorid,
                     Title = p.Title,
                     Body = p.Body,
                     Createdate = p.Createdate,
@@ -100,7 +101,6 @@ namespace SrSur.Repositories
                     Lasteditdate = p.Lasteditdate,
                     Poststatus = p.Poststatus,
                     Excerpt = p.Excerpt,
-                    Author = p.Author,
                     Categories = p.Categories.Select(c => new Category {
                         Id =c.Id,
                         Categoryname =c.Categoryname
