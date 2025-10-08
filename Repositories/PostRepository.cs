@@ -6,6 +6,7 @@ using SrSur.Models.DTOs.output;
 using SrSur.Models.Entities;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.Json;
 
 namespace SrSur.Repositories
 {
@@ -130,7 +131,8 @@ namespace SrSur.Repositories
                 switch (f.Key)
                 {
                     case "Id":
-                        long postId = (long)filters["Id"];
+
+                        long postId = ((JsonElement)filters["Id"]).GetInt64();
                         basePost = await _context.Posts
                             .Include(p => p.Categories)                            
                             .FirstOrDefaultAsync(p => p.Id == postId && p.Poststatus == "publish");
