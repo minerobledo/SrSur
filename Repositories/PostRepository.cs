@@ -117,7 +117,7 @@ namespace SrSur.Repositories
                     }).ToList(),
                     CloudflareId= p.CloudflareId,
                     FileName= p.FileName,
-                    Variants = p.Variants,
+                    Variants = p.Variants
                 });
 
             return await query.ToListAsync(); 
@@ -207,6 +207,7 @@ namespace SrSur.Repositories
             p=> new Post
             {
                 Id = p.Id,
+                Authorid = p.Authorid,
                 Title = p.Title,
                 Body = p.Body,
                 Createdate = p.Createdate,
@@ -214,7 +215,6 @@ namespace SrSur.Repositories
                 Lasteditdate = p.Lasteditdate,
                 Poststatus = p.Poststatus,
                 Excerpt = p.Excerpt,
-                Author = p.Author,
                 Categories = p.Categories.Select(c => new Category
                 {
                     Id = c.Id,
@@ -226,6 +226,12 @@ namespace SrSur.Repositories
                     Tagname = t.Tagname,
                 }).ToList(),
                 Comments = p.Comments,
+                Postsvisitedbyguests = p.Postsvisitedbyguests.Select(p => new Postsvisitedbyguest
+                {
+                    Guestid = p.Guestid,
+                }).ToList(),
+                CloudflareId = p.CloudflareId,
+                FileName = p.FileName,
                 Variants = p.Variants
             };
         
