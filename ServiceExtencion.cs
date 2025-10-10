@@ -88,7 +88,7 @@ namespace SrSur
                 mc.CreateMap<Category,CategoryOutnDto>();
                 mc.CreateMap<Tag, TagOutDto>();
                 mc.CreateMap<Sponsor, CreateSponsorDto>();
-
+                mc.CreateMap<CreateSponsorDto,Sponsor>();
             }, loggerFactory);
 
             IMapper mapper = mappingConfig.CreateMapper();
