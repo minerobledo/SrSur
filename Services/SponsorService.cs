@@ -15,8 +15,9 @@ namespace SrSur.Services
         private readonly ISponcorRepository _sponcorRepository;
         private readonly IMapper _mapper;
 
-        public SponsorService(ISponsorImageRepocitory sponsorImageRepocitory, ISponcorRepository sponcorRepository, IMapper mapper)
+        public SponsorService(ICloudflareRepocitory cloudflareRepocitory, ISponsorImageRepocitory sponsorImageRepocitory, ISponcorRepository sponcorRepository, IMapper mapper)
         {
+            _cloudflareRepocitory = cloudflareRepocitory;
             _sponsorImageRepocitory = sponsorImageRepocitory;
             _sponcorRepository = sponcorRepository;
             _mapper = mapper;
